@@ -14,20 +14,35 @@ import CardContent from '@material-ui/core/CardContent'
 import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import { withStyles } from '@material-ui/core/styles'
+import { withSnackbar } from 'notistack'
 
 import GET_FEEDS from 'qql/queries/feed'
+import { VOTE_MUTATION } from 'qql/mutations/feed'
 import Content from 'components/Content'
 import HeroUnit from 'components/HeroUnit'
 import Loader from 'components/Loader'
+import { timeDifferenceForDate } from 'utils/time'
 
 import styles from './styles'
 
 class Feed extends PureComponent {
+	handleVote(linkId) {
+		const { voteForFeed, enqueueSnackbar } = this.props
+		voteForFeed({
+			variables: { linkId },
+		}).then(res => {
+			const { errors } = res
+			if (errors) errors.map(error => enqueueSnackbar(error.message, { variant: 'error' }))
+			else enqueueSnackbar('Well Done! Vote has been successfully accepted.', { variant: 'success' })
+		})
+	}
+
 	render() {
 		const { loading, error, feed, classes } = this.props
+		// const authToken = localStorage.getItem(AUTH_TOKEN)
 
 		if (loading) return <Loader />
-		if (error) return <div>Error</div>
+		if (error) return <div className={classes.error}>Error</div>
 
 		const listArray = feed.links
 
@@ -48,9 +63,20 @@ class Feed extends PureComponent {
 										<Typography gutterBottom variant="h5" component="h2">
 											{item.description}
 										</Typography>
+										<Typography gutterBottom variant="subtitle1">
+											{item.postedBy ? item.postedBy.name : 'Unknown'} {timeDifferenceForDate(item.createdAt)}
+										</Typography>
+										<Typography gutterBottom variant="subtitle1">
+											{(item.votes && item.votes.length) || 0} votes
+										</Typography>
 									</CardContent>
 									<CardActions>
-										<IconButton className={classes.button} aria-label="ThumbUp" color="primary">
+										<IconButton
+											onClick={() => this.handleVote(item.id)}
+											className={classes.button}
+											aria-label="ThumbUp"
+											color="primary"
+										>
 											<ThumbUp />
 										</IconButton>
 										<IconButton className={classes.button} aria-label="ThumbDown" color="secondary">
@@ -77,6 +103,8 @@ Feed.propTypes = {
 	error: PropTypes.object,
 	feed: PropTypes.object,
 	classes: PropTypes.object.isRequired,
+	voteForFeed: PropTypes.func.isRequired,
+	enqueueSnackbar: PropTypes.func.isRequired,
 }
 
 Feed.defaultProps = {
@@ -89,6 +117,7 @@ Feed.defaultProps = {
 
 export default compose(
 	withStyles(styles),
+	withSnackbar,
 	graphql(GET_FEEDS, {
 		props: props => {
 			const {
@@ -100,6 +129,20 @@ export default compose(
 				error,
 				feed,
 			}
+		},
+	}),
+	graphql(VOTE_MUTATION, {
+		name: 'voteForFeed',
+		options: {
+			update: (store, { data }) => {
+				const linkId = data.vote.link.id
+
+				const feedsData = store.readQuery({ query: GET_FEEDS })
+				const votedLink = feedsData.feed.links.find(link => link.id === linkId)
+				votedLink.votes = data.vote.link.votes
+
+				store.writeQuery({ query: GET_FEEDS, data: feedsData })
+			},
 		},
 	})
 )(Feed)

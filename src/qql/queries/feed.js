@@ -8,6 +8,16 @@ const GET_FEEDS = gql`
 				createdAt
 				url
 				description
+				postedBy {
+					id
+					name
+				}
+				votes {
+					id
+					user {
+						id
+					}
+				}
 			}
 		}
 	}

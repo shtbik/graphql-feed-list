@@ -7,7 +7,38 @@ const ADD_FEED = gql`
 			createdAt
 			url
 			description
+			postedBy {
+				id
+				name
+			}
+			votes {
+				id
+				user {
+					id
+				}
+			}
 		}
 	}
 `
-export default ADD_FEED
+
+const VOTE_MUTATION = gql`
+	mutation voteForFeed($linkId: ID!) {
+		vote(linkId: $linkId) {
+			id
+			link {
+				id
+				votes {
+					id
+					user {
+						id
+					}
+				}
+			}
+			user {
+				id
+			}
+		}
+	}
+`
+
+export { ADD_FEED, VOTE_MUTATION }

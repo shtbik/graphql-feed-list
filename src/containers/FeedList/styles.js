@@ -13,6 +13,11 @@ const styles = theme => ({
 	cardContent: {
 		flexGrow: 1,
 	},
+	error: {
+		textAlign: 'center',
+		padding: '50px',
+		...theme.typography.subtitle1,
+	},
 })
 
 export default styles

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { withSnackbar } from 'notistack'
 
-import ADD_FEED from 'qql/mutations/feed'
+import { ADD_FEED } from 'qql/mutations/feed'
 import GET_FEEDS from 'qql/queries/feed'
 import styles from './styles'
 
@@ -31,11 +31,12 @@ class AddFeed extends Component {
 		e.preventDefault()
 		const { addFeed, enqueueSnackbar } = this.props
 
+		// Has warning about postedBy, and votes
 		addFeed({
-			variables: this.state,
+			variables: {
+				...this.state,
+			},
 		}).then(res => {
-			// Лучше выбрать что-то одно
-
 			const { errors } = res
 			if (errors) errors.map(error => enqueueSnackbar(error.message, { variant: 'error' }))
 			else {
@@ -107,18 +108,14 @@ export default compose(
 	graphql(ADD_FEED, {
 		name: 'addFeed',
 		options: {
-			update: (proxy, { data: { post } }) => {
+			update: (store, { data: { post } }) => {
 				// How to solve it?
 				try {
-					const { feed } = proxy.readQuery({ query: GET_FEEDS })
-					proxy.writeQuery({
+					const data = store.readQuery({ query: GET_FEEDS })
+					data.feed.links.unshift(post)
+					store.writeQuery({
 						query: GET_FEEDS,
-						data: {
-							feed: {
-								...feed,
-								links: feed.links.concat([post]),
-							},
-						},
+						data,
 					})
 				} catch (e) {
 					console.log('Error to update chache', e)
