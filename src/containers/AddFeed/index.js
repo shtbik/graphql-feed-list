@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { withSnackbar } from 'notistack'
 
 import { ADD_FEED } from 'qql/mutations/feed'
-import GET_FEEDS from 'qql/queries/feed'
+import { GET_FEEDS } from 'qql/queries/feed'
 import styles from './styles'
 
 const initialState = {

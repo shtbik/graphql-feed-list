@@ -23,4 +23,27 @@ const GET_FEEDS = gql`
 	}
 `
 
-export default GET_FEEDS
+const FEED_SEARCH_QUERY = gql`
+	query feedSearchQuery($filter: String!) {
+		feed(filter: $filter) {
+			links {
+				id
+				url
+				description
+				createdAt
+				postedBy {
+					id
+					name
+				}
+				votes {
+					id
+					user {
+						id
+					}
+				}
+			}
+		}
+	}
+`
+
+export { GET_FEEDS, FEED_SEARCH_QUERY }
