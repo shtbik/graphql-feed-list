@@ -2,8 +2,11 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core/styles'
 
 import debounce from 'utils/debounce'
+
+import styles from './styles'
 
 class Search extends PureComponent {
 	state = {
@@ -26,8 +29,8 @@ class Search extends PureComponent {
 	}
 
 	render() {
+		const { className, classes } = this.props
 		const { text } = this.state
-		const { className } = this.props
 
 		return (
 			<div className={className}>
@@ -39,6 +42,7 @@ class Search extends PureComponent {
 						margin="normal"
 						value={text}
 						onChange={this.onInputChange}
+						className={classes.textField}
 					/>
 				</form>
 			</div>
@@ -50,9 +54,10 @@ Search.propTypes = {
 	className: PropTypes.string,
 	onSearch: PropTypes.func.isRequired,
 	getInitialList: PropTypes.func.isRequired,
+	classes: PropTypes.object.isRequired,
 }
 Search.defaultProps = {
 	className: '',
 }
 
-export default Search
+export default withStyles(styles)(Search)

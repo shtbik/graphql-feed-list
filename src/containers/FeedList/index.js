@@ -7,7 +7,12 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
 import { withSnackbar } from 'notistack'
 
-import { GET_FEEDS, FEED_SEARCH_QUERY } from 'qql/queries/feed'
+import {
+	GET_FEEDS,
+	FEED_SEARCH_QUERY,
+	NEW_FEEDS_SUBSCRIPTION,
+	NEW_VOTES_SUBSCRIPTION,
+} from 'qql/queries/feed'
 import { VOTE_MUTATION } from 'qql/mutations/feed'
 import Content from 'components/Content'
 import HeroUnit from 'components/HeroUnit'
@@ -53,14 +58,45 @@ class FeedList extends PureComponent {
 		this.setState({ feeds: null })
 	}
 
+	subscribeToNewLinks = subscribeToMore => {
+		subscribeToMore({
+			document: NEW_FEEDS_SUBSCRIPTION,
+			updateQuery: (prev, { subscriptionData }) => {
+				if (!subscriptionData.data) return prev
+				const { data } = subscriptionData
+				const { newLink } = data
+				const exists = prev.feed.links.find(({ id }) => id === newLink.id)
+				if (exists) return prev
+
+				return Object.assign({}, prev, {
+					feed: {
+						links: [newLink, ...prev.feed.links],
+						count: prev.feed.links.length + 1,
+						/* eslint no-underscore-dangle: "off" */
+						__typename: prev.feed.__typename,
+					},
+				})
+			},
+		})
+	}
+
+	subscribeToNewVotes = subscribeToMore => {
+		subscribeToMore({
+			document: NEW_VOTES_SUBSCRIPTION,
+		})
+	}
+
 	render() {
-		const { loading, error, feed, classes } = this.props
+		const { loading, error, feed, classes, subscribeToMore } = this.props
 		const { feeds } = this.state
 		// const authToken = localStorage.getItem(AUTH_TOKEN)
 
 		// TODO: add implementation of search loading
 		if (loading) return <Loader />
 		if (error) return <div className={classes.error}>Error</div>
+
+		this.subscribeToNewLinks(subscribeToMore)
+		this.subscribeToNewVotes(subscribeToMore)
 
 		const listArray = feeds || feed.links
 
@@ -69,11 +105,15 @@ class FeedList extends PureComponent {
 				<HeroUnit />
 
 				<Content>
-					<Search
-						className={classes.searchBlock}
-						onSearch={this.onSearch}
-						getInitialList={this.getInitialList}
-					/>
+					<Grid container spacing={40}>
+						<Grid item sm={12} md={6} lg={4}>
+							<Search
+								className={classes.searchBlock}
+								onSearch={this.onSearch}
+								getInitialList={this.getInitialList}
+							/>
+						</Grid>
+					</Grid>
 					{feeds && !feeds.length ? (
 						<div className={classes.error}>Nothing found</div>
 					) : (
@@ -97,13 +137,11 @@ FeedList.propTypes = {
 	voteForFeed: PropTypes.func.isRequired,
 	enqueueSnackbar: PropTypes.func.isRequired,
 	client: PropTypes.object.isRequired,
+	subscribeToMore: PropTypes.func.isRequired,
 }
 
 FeedList.defaultProps = {
 	feed: {},
-}
-
-FeedList.defaultProps = {
 	error: null,
 }
 
@@ -114,13 +152,16 @@ export default compose(
 	graphql(GET_FEEDS, {
 		props: props => {
 			const {
-				data: { loading, error, feed },
+				data: { loading, error, feed = {}, subscribeToMore },
 			} = props
+			const { links = [] } = feed
+			links.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
 			return {
 				loading,
 				error,
 				feed,
+				subscribeToMore,
 			}
 		},
 	}),

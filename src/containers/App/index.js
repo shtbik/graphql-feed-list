@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Switch } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
+import Error404 from 'components/Error404'
 import routes from 'routes'
 
 import styles from './styles'
@@ -23,6 +24,7 @@ function App(props) {
 					{routes.map(({ component: Component, path, exact }) => (
 						<Component path={path} exact={exact} key={path} />
 					))}
+					<Route exact component={Error404} />
 				</Switch>
 				{/* </div> */}
 			</main>

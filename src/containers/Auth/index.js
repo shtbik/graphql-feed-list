@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 
-import { AUTH_TOKEN } from 'configs/app'
+import { AUTH_TOKEN, AUTH_USER } from 'configs/app'
 import { LOGIN_MUTATION, SIGNUP_MUTATION } from 'qql/mutations/auth'
 
 import styles from './styles'
@@ -80,13 +80,15 @@ class Auth extends Component {
 
 	confirmAuth = data => {
 		const { history } = this.props
-		const { token } = this.isSignUpPage ? data.signup : data.login
-		this.saveUserData(token)
+		const userData = this.isSignUpPage ? data.signup : data.login
+		this.saveUserData(userData)
 		history.push(`/`)
 	}
 
-	saveUserData = token => {
+	saveUserData = userData => {
+		const { token, user } = userData
 		localStorage.setItem(AUTH_TOKEN, token)
+		localStorage.setItem(AUTH_USER, JSON.stringify(user))
 	}
 
 	render() {
