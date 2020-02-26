@@ -2,6 +2,11 @@
 
 ![Example of Interface](https://imgur.com/BS7bMQF.png)
 
+## Demo
+https://shtbik.github.io/graphql-feed-list
+test@test.ru
+123456
+
 ## Start Project
 
 1. yarn install
