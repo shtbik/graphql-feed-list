@@ -1,6 +1,6 @@
 ## UI
 
-![Example of Interface](https://imgur.com/BS7bMQF)
+![Example of Interface](https://imgur.com/BS7bMQF.png)
 
 ## Start Project
 
