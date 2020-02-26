@@ -2,15 +2,17 @@ import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
-
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
+import getApolloURI from './getApolloUrl'
 import { AUTH_TOKEN } from './app'
 
+const { host, protocol } = getApolloURI()
+
 const httpLink = createHttpLink({
-	uri: 'http://localhost:4000',
+	uri: `${protocol}://${host}`,
 })
 
 const defaultOptions = {
@@ -37,7 +39,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const wsLink = new WebSocketLink({
-	uri: `ws://localhost:4000`,
+	uri: `ws://${host}`,
 	options: {
 		reconnect: true,
 		connectionParams: {

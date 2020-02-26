@@ -25,7 +25,7 @@ const Feed = ({
 		<Card className={classes.card}>
 			<CardMedia
 				className={classes.cardMedia}
-				image={`https://picsum.photos/680/500/?random&gravity=center&image=${id}`}
+				image={`https://picsum.photos/680/500?random=${id}&gravity=center`}
 				title="Image title"
 			/>
 			<CardContent className={classes.cardContent}>

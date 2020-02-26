@@ -10,11 +10,8 @@ import App from 'containers/App'
 import client from 'configs/graphql'
 
 import './styles/index.css'
-import * as serviceWorker from './serviceWorker'
 
 const history = createBrowserHistory()
-
-// const Context = React.createContext();
 
 ReactDOM.render(
 	<ApolloProvider client={client}>
@@ -26,8 +23,3 @@ ReactDOM.render(
 	</ApolloProvider>,
 	document.getElementById('root')
 )
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister()

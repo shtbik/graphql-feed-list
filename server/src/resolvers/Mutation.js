@@ -7,6 +7,7 @@ function post(parent, args, context) {
 	return context.prisma.createLink({
 		url: args.url,
 		description: args.description,
+		createdAt: new Date(),
 		postedBy: { connect: { id: userId } },
 	})
 }

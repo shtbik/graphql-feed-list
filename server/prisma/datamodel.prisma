@@ -1,5 +1,5 @@
 type Link {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   description: String!
   url: String!
@@ -8,7 +8,7 @@ type Link {
 }
 
 type User {
-  id: ID! @unique
+  id: ID! @id
   name: String!
   email: String! @unique
   password: String!
@@ -17,7 +17,7 @@ type User {
 }
 
 type Vote {
-  id: ID! @unique
+  id: ID! @id
   link: Link!
   user: User!
 }
