@@ -9,10 +9,10 @@ import { getMainDefinition } from 'apollo-utilities'
 import getApolloURI from './getApolloUrl'
 import { AUTH_TOKEN } from './app'
 
-const { host, protocol } = getApolloURI()
+const { host, ssl, wss } = getApolloURI()
 
 const httpLink = createHttpLink({
-	uri: `${protocol}://${host}`,
+	uri: `${ssl ? 'https' : 'http'}://${host}`,
 })
 
 const defaultOptions = {
@@ -39,7 +39,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const wsLink = new WebSocketLink({
-	uri: `wss://${host}`,
+	uri: `${wss ? 'wss' : 'ws'}://${host}`,
 	options: {
 		reconnect: true,
 		connectionParams: {

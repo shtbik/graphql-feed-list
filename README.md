@@ -15,7 +15,7 @@
 ## Deploy Server to Heroku
 
 1. cd ./server
-2. yarn prisma generate
+2. yarn prisma generate (isn't require)
 3. git subtree push --prefix ./server heroku master
 4. https://graphql-feed-list.herokuapp.com/
 

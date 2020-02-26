@@ -3,13 +3,15 @@ function getApolloURI() {
 		case 'development':
 			return {
 				host: 'graphql-feed-list.herokuapp.com',
-				protocol: 'https',
+				ssl: true,
+				wss: true,
 			}
 
 		default:
 			return {
 				host: 'localhost:4000',
-				protocol: 'http',
+				ssl: false,
+				wss: false,
 			}
 	}
 }
