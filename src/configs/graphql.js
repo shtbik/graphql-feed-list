@@ -39,7 +39,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const wsLink = new WebSocketLink({
-	uri: `ws://${host}`,
+	uri: `wss://${host}`,
 	options: {
 		reconnect: true,
 		connectionParams: {
