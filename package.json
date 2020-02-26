@@ -2,7 +2,7 @@
   "name": "graphql-github",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "https://shtbik.github.io/graphql-feed-list",
+  "homepage": "https://shtbik.github.io/graphql-feed-list",
   "dependencies": {
     "@material-ui/core": "^3.8.3",
     "@material-ui/icons": "^3.0.2",
@@ -25,7 +25,8 @@
     "start": "react-scripts start",
     "start:server": "cd server && yarn start",
     "build": "REACT_APP_GQL_MODE=development react-scripts build",
-    "postbuild": "mv build dist",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -46,6 +47,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.0",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "gh-pages": "^2.2.0"
   }
 }
