@@ -1,5 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga')
-const { prisma } = require('./generated/prisma-client')
+const { Prisma } = require('prisma-binding')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const Subscription = require('./resolvers/Subscription')
@@ -21,8 +21,12 @@ const server = new GraphQLServer({
 	resolvers,
 	context: request => ({
 		...request,
-		prisma,
+		db: new Prisma({
+			typeDefs: 'src/generated/prisma-client/prisma.graphql', // the generated Prisma DB schema
+			endpoint: 'https://eu1.prisma.sh/alexander-shtykov-ca308e/prisma/dev', // the endpoint of the Prisma DB service
+			debug: true, // log all GraphQL queries & mutations
+		}),
 	}),
 })
 
-server.start(() => console.log(`Server is running on http://localhost:4000`))
+server.start(({ port }) => console.log(`Server is running on ${port} port`))

@@ -1,5 +1,4 @@
 function getApolloURI() {
-	console.log('getApolloURI', process.env.REACT_APP_GQL_MODE)
 	switch (process.env.REACT_APP_GQL_MODE) {
 		case 'development':
 			return {
