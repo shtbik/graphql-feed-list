@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "start:pg": "yarn prisma playground",
+    "start:plgr": "yarn prisma playground",
     "prisma": "prisma"
   },
   "dependencies": {

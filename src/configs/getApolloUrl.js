@@ -2,7 +2,7 @@ function getApolloURI() {
 	switch (process.env.REACT_APP_GQL_MODE) {
 		case 'development':
 			return {
-				host: 'eu1.prisma.sh/alexander-shtykov-ca308e/prisma/dev',
+				host: 'graphql-feed-list.herokuapp.com',
 				protocol: 'https',
 			}
 
