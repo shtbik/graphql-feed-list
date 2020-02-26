@@ -5,8 +5,7 @@
 ## Demo
 https://shtbik.github.io/graphql-feed-list
 
-test@test.ru
-123456
+test@test.ru | 123456
 
 ## Start Project
 
