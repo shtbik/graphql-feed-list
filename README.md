@@ -1,7 +1,6 @@
 ## UI
 
-
-![Example of WebSocket](https://imgur.com/a/ARu5LC9.gif)
+[Example of WebSocket](https://i.imgur.com/c1I4wqn.gifv)
 ![Example of Interface](https://imgur.com/BS7bMQF.png)
 
 ## Demo
