@@ -10,13 +10,13 @@
 ## Deploy Static to Github
 
 1. yarn build
-2. git subtree push --prefix path/to/subdirectory origin gh-pages
+2. git subtree push --prefix ./build origin gh-pages
 
 ## Deploy Server to Heroku
 
 1. cd ./server
 2. yarn prisma generate
-3. git subtree push --prefix path/to/subdirectory heroku master
+3. git subtree push --prefix ./server heroku master
 4. https://graphql-feed-list.herokuapp.com/
 
 https://medium.com/@shalandy/deploy-git-subdirectory-to-heroku-ea05e95fce1f
