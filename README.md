@@ -16,7 +16,7 @@
 
 1. cd ./server
 2. yarn prisma generate (isn't require)
-3. git subtree push --prefix ./server heroku master
+3. git subtree push --prefix server heroku master
 4. https://graphql-feed-list.herokuapp.com/
 
 https://medium.com/@shalandy/deploy-git-subdirectory-to-heroku-ea05e95fce1f

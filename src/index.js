@@ -11,11 +11,13 @@ import client from 'configs/graphql'
 
 import './styles/index.css'
 
-const history = createBrowserHistory()
+const history = createBrowserHistory({
+	basename: process.env.PUBLIC_URL,
+})
 
 ReactDOM.render(
 	<ApolloProvider client={client}>
-		<Router history={history}>
+		<Router history={history} basename={process.env.PUBLIC_URL}>
 			<SnackbarProvider maxSnack={3}>
 				<App />
 			</SnackbarProvider>
