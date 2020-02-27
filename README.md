@@ -18,7 +18,7 @@ test@test.ru | 123456
 5. localhost:3000 - client
 6. localhost:4000 - server
 
-## Deploy Static to Github
+## Deploy Client to Github
 
 1. yarn build
 2. git subtree push --prefix ./build origin gh-pages
