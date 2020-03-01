@@ -13,17 +13,20 @@ function timeDifference(current, previous) {
 
 	if (elapsed < milliSecondsPerMinute) {
 		return 'less than 1 min ago'
-	} if (elapsed < milliSecondsPerHour) {
-		return `${Math.round(elapsed / milliSecondsPerMinute)  } min ago`
-	} if (elapsed < milliSecondsPerDay) {
-		return `${Math.round(elapsed / milliSecondsPerHour)  } h ago`
-	} if (elapsed < milliSecondsPerMonth) {
-		return `${Math.round(elapsed / milliSecondsPerDay)  } days ago`
-	} if (elapsed < milliSecondsPerYear) {
-		return `${Math.round(elapsed / milliSecondsPerMonth)  } mo ago`
-	} 
-	return `${Math.round(elapsed / milliSecondsPerYear)  } years ago`
-	
+	}
+	if (elapsed < milliSecondsPerHour) {
+		return `${Math.round(elapsed / milliSecondsPerMinute)} min ago`
+	}
+	if (elapsed < milliSecondsPerDay) {
+		return `${Math.round(elapsed / milliSecondsPerHour)} h ago`
+	}
+	if (elapsed < milliSecondsPerMonth) {
+		return `${Math.round(elapsed / milliSecondsPerDay)} days ago`
+	}
+	if (elapsed < milliSecondsPerYear) {
+		return `${Math.round(elapsed / milliSecondsPerMonth)} mo ago`
+	}
+	return `${Math.round(elapsed / milliSecondsPerYear)} years ago`
 }
 
 export function timeDifferenceForDate(date) {

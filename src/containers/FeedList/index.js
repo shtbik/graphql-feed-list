@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
-import { compose, graphql, withApollo } from 'react-apollo'
-// import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { compose, graphql, withApollo } from 'react-apollo'
 
 import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
@@ -89,7 +88,6 @@ class FeedList extends PureComponent {
 	render() {
 		const { loading, error, feed, classes, subscribeToMore } = this.props
 		const { feeds } = this.state
-		// const authToken = localStorage.getItem(AUTH_TOKEN)
 
 		// TODO: add implementation of search loading
 		if (loading) return <Loader />
@@ -119,7 +117,7 @@ class FeedList extends PureComponent {
 					) : (
 						<Grid container spacing={40}>
 							{listArray.map(item => (
-								<Feed key={item.id} feed={{ ...item }} handleVote={this.handleVote} />
+								<Feed key={item.id} feed={item} handleVote={this.handleVote} />
 							))}
 						</Grid>
 					)}

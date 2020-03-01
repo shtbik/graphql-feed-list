@@ -11,27 +11,20 @@ import routes from 'routes'
 
 import styles from './styles'
 
-function App(props) {
-	const { classes } = props
-
-	return (
-		<Fragment>
-			<Header />
-			<main className={classes.mainBlock}>
-				{/* <HeroUnit /> */}
-				{/* <div className={classNames(classes.layout, classes.content)}> */}
-				<Switch>
-					{routes.map(({ component: Component, path, exact }) => (
-						<Component path={path} exact={exact} key={path} />
-					))}
-					<Route exact component={Error404} />
-				</Switch>
-				{/* </div> */}
-			</main>
-			<Footer />
-		</Fragment>
-	)
-}
+const App = ({ classes }) => (
+	<Fragment>
+		<Header />
+		<main className={classes.mainBlock}>
+			<Switch>
+				{routes.map(({ component: Component, path, exact }) => (
+					<Component path={path} exact={exact} key={path} />
+				))}
+				<Route exact component={Error404} />
+			</Switch>
+		</main>
+		<Footer />
+	</Fragment>
+)
 
 App.propTypes = {
 	classes: PropTypes.object.isRequired,

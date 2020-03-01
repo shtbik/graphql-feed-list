@@ -118,7 +118,7 @@ export default compose(
 						data,
 					})
 				} catch (e) {
-					console.log('Error to update chache', e)
+					console.error('Error to update chache', e)
 				}
 			},
 		},

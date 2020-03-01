@@ -9,7 +9,7 @@ import styles from './styles'
 const Error404 = ({ classes }) => (
 	<div className={classes.center}>
 		<Typography variant="h6" align="center" paragraph>
-			Page not found 404
+			Page not found — 404
 		</Typography>
 	</div>
 )

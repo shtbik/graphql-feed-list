@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import styles from './styles'
 
+// TODO: change keys to codes
 const linkConfig = {
 	'/': {
 		to: '/add-feed',

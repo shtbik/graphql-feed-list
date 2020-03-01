@@ -7,13 +7,9 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
 import getApolloURI from './getApolloUrl'
-import { AUTH_TOKEN } from './app'
+import { AUTH_TOKEN } from './consts'
 
 const { host, ssl, wss } = getApolloURI()
-
-const httpLink = createHttpLink({
-	uri: `${ssl ? 'https' : 'http'}://${host}`,
-})
 
 const defaultOptions = {
 	watchQuery: {
@@ -27,6 +23,10 @@ const defaultOptions = {
 		errorPolicy: 'all',
 	},
 }
+
+const httpLink = createHttpLink({
+	uri: `${ssl ? 'https' : 'http'}://${host}`,
+})
 
 const authLink = setContext((_, { headers }) => {
 	const token = localStorage.getItem(AUTH_TOKEN)

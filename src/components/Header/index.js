@@ -13,15 +13,17 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Toolbar from '@material-ui/core/Toolbar'
 import { withStyles } from '@material-ui/core/styles'
 
-import { AUTH_TOKEN, AUTH_USER } from 'configs/app'
+import { AUTH_TOKEN, AUTH_USER } from 'configs/consts'
 
 import styles from './styles'
 
 class Header extends Component {
 	logout = () => {
-		const { history } = this.props
+		const {
+			history: { push },
+		} = this.props
 		localStorage.removeItem(AUTH_TOKEN)
-		history.push(`/`)
+		push(`/`)
 	}
 
 	render() {

@@ -10,28 +10,24 @@
 		],
 		"max-len": [
 			"error",
-			120,
-			2
+			{
+				"code": 120,
+				"tabWidth": 2,
+				"ignoreComments": true,
+				"ignoreUrls": true,
+				"ignoreRegExpLiterals": true,
+				"ignoreStrings": true
+			}
 		],
-		"semi": [
-			"error",
-			"never"
-		],
+		"semi": ["error", "never"],
 		"react/jsx-filename-extension": [
 			1,
 			{
-				"extensions": [
-					".js",
-					".jsx"
-				]
+				"extensions": [".js", ".jsx"]
 			}
 		],
-		"react/forbid-prop-types": [
-			0
-		],
-		"camelcase": [
-			0
-		],
+		"react/forbid-prop-types": [0],
+		"camelcase": [0],
 		"indent": [
 			1,
 			"tab",
@@ -40,25 +36,15 @@
 			}
 		],
 		"no-tabs": 0,
-		"react/jsx-indent": [
-			1,
-			"tab"
-		],
-		"react/jsx-indent-props": [
-			1,
-			"tab"
-		],
-		"linebreak-style": [
-			0,
-			"unix"
-		]
+		"no-console": ["error", { "allow": ["warn", "error"] }],
+		"react/jsx-indent": [1, "tab"],
+		"react/jsx-indent-props": [1, "tab"],
+		"linebreak-style": [0, "unix"]
 	},
 	"settings": {
 		"import/resolver": {
 			"node": {
-				"paths": [
-					"src"
-				]
+				"paths": ["src"]
 			}
 		}
 	},
@@ -72,11 +58,7 @@
 		"__BASE_URL__": true,
 		"expect": true
 	},
-	"extends": [
-		"airbnb",
-		"prettier",
-		"prettier/react"
-	],
+	"extends": ["airbnb", "prettier", "prettier/react"],
 	"parserOptions": {
 		"sourceType": "module",
 		"ecmaFeatures": {
@@ -85,8 +67,5 @@
 		},
 		"ecmaVersion": 6
 	},
-	"plugins": [
-		"react",
-		"prettier"
-	]
+	"plugins": ["react", "prettier"]
 }

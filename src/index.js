@@ -1,15 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Router } from 'react-router-dom'
 
 import { ApolloProvider } from 'react-apollo'
-import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
+
+// TODO: remove dependency
 import { SnackbarProvider } from 'notistack'
 
 import App from 'containers/App'
 import client from 'configs/graphql'
-
-import './styles/index.css'
 
 const history = createBrowserHistory({
 	basename: process.env.PUBLIC_URL,
