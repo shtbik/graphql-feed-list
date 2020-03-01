@@ -1,3 +1,14 @@
+## UI
+
+![Example of WebSocket](https://i.imgur.com/c1I4wqn.gif)
+
+![Example of Interface](https://imgur.com/BS7bMQF.png)
+
+## Demo
+https://shtbik.github.io/graphql-feed-list
+
+test@test.ru | 123456
+
 ## Start Project
 
 1. yarn install
@@ -7,7 +18,7 @@
 5. localhost:3000 - client
 6. localhost:4000 - server
 
-## Deploy Static to Github
+## Deploy Client to Github
 
 1. yarn build
 2. git subtree push --prefix ./build origin gh-pages
