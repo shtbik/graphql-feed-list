@@ -5,6 +5,7 @@
 ![Example of Interface](https://imgur.com/BS7bMQF.png)
 
 ## Demo
+
 https://shtbik.github.io/graphql-feed-list
 
 test@test.ru | 123456
@@ -41,3 +42,10 @@ For start both schemas at single playground at the moment you should:
 3. yarn start:plgr - include prisma queries/mutations
 
 https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/build-a-graphql-server-from-scratch-nahgaghei6#generating-the-prisma-database-schema
+
+## TODO
+
+- refactoring, move to hooks style
+- add upvoting feature
+- add personal page with list of contents
+- add new fields (title, source, author, etc.) to feed model
