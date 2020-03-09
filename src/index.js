@@ -2,13 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router } from 'react-router-dom'
 
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider } from '@apollo/react-hooks'
 import { createBrowserHistory } from 'history'
 
 // TODO: remove dependency
 import { SnackbarProvider } from 'notistack'
 
-import App from 'containers/App'
+import Layout from 'containers/Layout'
 import client from 'configs/graphql'
 
 const history = createBrowserHistory({
@@ -19,7 +19,7 @@ ReactDOM.render(
 	<ApolloProvider client={client}>
 		<Router history={history} basename={process.env.PUBLIC_URL}>
 			<SnackbarProvider maxSnack={3}>
-				<App />
+				<Layout />
 			</SnackbarProvider>
 		</Router>
 	</ApolloProvider>,

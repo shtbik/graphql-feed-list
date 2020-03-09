@@ -7,7 +7,7 @@ const styles = theme => ({
 		alignItems: 'center',
 	},
 	progress: {
-		margin: `${theme.spacing.unit * 2}px auto`,
+		margin: `${theme.spacing(2)}px auto`,
 		display: 'block',
 	},
 })

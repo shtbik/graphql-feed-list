@@ -15,6 +15,7 @@ async function feed(parent, args, context) {
 		first: args.first,
 		orderBy: args.orderBy,
 	})
+
 	return {
 		count,
 		links,

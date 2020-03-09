@@ -7,6 +7,10 @@ const styles = theme => ({
 	searchBlock: {
 		marginBottom: '30px',
 	},
+	loader: {
+		position: 'relative',
+		height: '300px',
+	},
 })
 
 export default styles

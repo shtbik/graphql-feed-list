@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { compose, graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
+import { flowRight as compose } from 'lodash'
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'

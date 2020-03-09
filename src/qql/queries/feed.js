@@ -1,36 +1,28 @@
 import gql from 'graphql-tag'
 
-const GET_FEEDS = gql`
-	query feedList {
-		feed {
-			links {
-				id
-				createdAt
-				url
-				description
-				postedBy {
-					id
-					name
-				}
-				votes {
-					id
-					user {
-						id
-					}
-				}
-			}
-		}
+// TODO: add fragments
+// move to .gql files
+
+/* eslint no-unused-vars: "off" */
+const LinkOrderByInput = gql`
+	enum LinkOrderByInput {
+		description_ASC
+		description_DESC
+		url_ASC
+		url_DESC
+		createdAt_ASC
+		createdAt_DESC
 	}
 `
 
-const FEED_SEARCH_QUERY = gql`
-	query feedSearchQuery($filter: String!) {
-		feed(filter: $filter) {
+const GET_FEEDS = gql`
+	query feedList($orderBy: LinkOrderByInput, $filter: String) {
+		feed(orderBy: $orderBy, filter: $filter) {
 			links {
 				id
+				createdAt
 				url
 				description
-				createdAt
 				postedBy {
 					id
 					name
@@ -94,4 +86,4 @@ const NEW_VOTES_SUBSCRIPTION = gql`
 	}
 `
 
-export { GET_FEEDS, FEED_SEARCH_QUERY, NEW_FEEDS_SUBSCRIPTION, NEW_VOTES_SUBSCRIPTION }
+export { GET_FEEDS, NEW_FEEDS_SUBSCRIPTION, NEW_VOTES_SUBSCRIPTION }

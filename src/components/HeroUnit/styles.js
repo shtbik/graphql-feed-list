@@ -5,10 +5,10 @@ const styles = theme => ({
 	heroContent: {
 		maxWidth: 600,
 		margin: '0 auto',
-		padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
+		padding: `${theme.spacing(8)}px 0 ${theme.spacing(6)}px`,
 	},
 	heroButtons: {
-		marginTop: theme.spacing.unit * 4,
+		marginTop: theme.spacing(4),
 	},
 })
 

@@ -1,28 +1,4 @@
-import FeedList from 'containers/FeedList'
-import AddFeed from 'containers/AddFeed'
-import Auth from 'containers/Auth'
+import authRoutes from './auth'
+import feedRoutes from './feed'
 
-const routes = [
-	{
-		path: '/',
-		component: FeedList,
-		exact: true,
-	},
-	{
-		path: '/add-feed',
-		component: AddFeed,
-		exact: true,
-	},
-	{
-		path: '/sign-in',
-		component: Auth,
-		exact: true,
-	},
-	{
-		path: '/sign-up',
-		component: Auth,
-		exact: true,
-	},
-]
-
-export default routes
+export default [].concat(authRoutes, feedRoutes)

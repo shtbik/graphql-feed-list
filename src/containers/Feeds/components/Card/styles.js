@@ -1,6 +1,6 @@
 const styles = theme => ({
 	cardGrid: {
-		padding: `${theme.spacing.unit * 8}px 0`,
+		padding: `${theme.spacing(8)}px 0`,
 	},
 	card: {
 		height: '100%',

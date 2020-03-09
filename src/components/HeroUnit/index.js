@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Link, withRouter } from 'react-router-dom'
@@ -22,40 +22,33 @@ const linkConfig = {
 	},
 }
 
-class HeroUnit extends PureComponent {
-	render() {
-		const {
-			classes,
-			location: { pathname },
-		} = this.props
+const HeroUnit = ({ classes, location: { pathname } }) => {
+	const buttonConfig = linkConfig[pathname] || {
+		to: '/',
+		text: 'Feed List',
+	}
 
-		const buttonConfig = linkConfig[pathname] || {
-			to: '/',
-			text: 'Feed List',
-		}
-
-		return (
-			<div className={classes.heroUnit}>
-				<div className={classes.heroContent}>
-					<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-						Feed List
-					</Typography>
-					<Typography variant="h6" align="center" color="textSecondary" paragraph>
-						You need auth for creating or voting for item
-					</Typography>
-					<div className={classes.heroButtons}>
-						<Grid container spacing={16} justify="center">
-							<Grid item>
-								<Button component={Link} to={buttonConfig.to} variant="contained" color="primary">
-									{buttonConfig.text}
-								</Button>
-							</Grid>
+	return (
+		<div className={classes.heroUnit}>
+			<div className={classes.heroContent}>
+				<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+					Feed List
+				</Typography>
+				<Typography variant="h6" align="center" color="textSecondary" paragraph>
+					You need authorize for creating or voting for item
+				</Typography>
+				<div className={classes.heroButtons}>
+					<Grid container spacing={2} justify="center">
+						<Grid item>
+							<Button component={Link} to={buttonConfig.to} variant="contained" color="primary">
+								{buttonConfig.text}
+							</Button>
 						</Grid>
-					</div>
+					</Grid>
 				</div>
 			</div>
-		)
-	}
+		</div>
+	)
 }
 
 HeroUnit.propTypes = {

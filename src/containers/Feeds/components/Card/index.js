@@ -49,7 +49,7 @@ const Feed = ({
 					<ThumbUp />
 				</IconButton>
 
-				{/* TODO: add unvote functionality */}
+				{/* TODO: add unvote feature */}
 				{/* <IconButton className={classes.button} aria-label="ThumbDown" color="secondary">
           <ThumbDown />
         </IconButton> */}

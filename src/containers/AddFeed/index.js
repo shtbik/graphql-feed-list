@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { compose, graphql } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
+import { graphql } from 'react-apollo'
+import { flowRight as compose } from 'lodash'
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -20,7 +21,11 @@ const initialState = {
 }
 
 class AddFeed extends Component {
-	state = initialState
+	constructor(props) {
+		super(props)
+
+		this.state = initialState
+	}
 
 	onChange = e => {
 		const { value, name } = e.target
