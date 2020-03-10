@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { graphql } from 'react-apollo'
 import { flowRight as compose } from 'lodash'
 
 import TextField from '@material-ui/core/TextField'
@@ -11,121 +10,88 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { withSnackbar } from 'notistack'
 
-import { ADD_FEED } from 'qql/mutations/feed'
-import { GET_FEEDS } from 'qql/queries/feed'
+import useAddFeed from './hooks/useAddFeed'
+
 import styles from './styles'
 
-const initialState = {
-	description: '',
-	url: '',
-}
+const AddFeed = ({ classes, enqueueSnackbar }) => {
+	const { addFeed, url, setUrl, description, setDescription, handleReset } = useAddFeed()
 
-class AddFeed extends Component {
-	constructor(props) {
-		super(props)
-
-		this.state = initialState
-	}
-
-	onChange = e => {
-		const { value, name } = e.target
-		this.setState({ [name]: value })
-	}
-
-	onSubmit = e => {
-		e.preventDefault()
-		const { addFeed, enqueueSnackbar } = this.props
+	const onSubmit = event => {
+		event.preventDefault()
 
 		// Has warning about postedBy, and votes
 		addFeed({
 			variables: {
-				...this.state,
+				url,
+				description,
 			},
 		}).then(res => {
 			const { errors } = res
 			if (errors) errors.map(error => enqueueSnackbar(error.message, { variant: 'error' }))
 			else {
 				enqueueSnackbar('Well Done! Feed has been successfully added.', { variant: 'success' })
-				this.clearForm()
+				handleReset()
 			}
 		})
 	}
 
-	clearForm = () => {
-		this.setState(initialState)
+	const onChange = fieldName => event => {
+		const setConfig = {
+			url: setUrl,
+			description: setDescription,
+		}
+
+		setConfig[fieldName](event.target.value)
 	}
 
-	render() {
-		const { description, url } = this.state
-		const { classes } = this.props
+	return (
+		<div className={classes.main}>
+			<Paper className={classes.paper}>
+				<Typography component="h1" variant="h5">
+					Add Feed Item
+				</Typography>
+				<form className={classes.container} onSubmit={onSubmit} autoComplete="off">
+					<TextField
+						required
+						label="Url"
+						className={classes.textField}
+						value={url}
+						onChange={onChange('url')}
+						margin="normal"
+						name="url"
+						placeholder="The URL for the feed"
+					/>
 
-		return (
-			<div className={classes.main}>
-				<Paper className={classes.paper}>
-					<Typography component="h1" variant="h5">
-						Add Feed Item
-					</Typography>
-					<form className={classes.container} onSubmit={this.onSubmit} autoComplete="off">
-						<TextField
-							required
-							label="Url"
-							className={classes.textField}
-							value={url}
-							onChange={this.onChange}
-							margin="normal"
-							name="url"
-							placeholder="The URL for the feed"
-						/>
+					<TextField
+						required
+						multiline
+						rows="4"
+						label="Description"
+						className={classes.textField}
+						value={description}
+						onChange={onChange('description')}
+						margin="normal"
+						name="description"
+						placeholder="A description for the feed"
+					/>
 
-						<TextField
-							required
-							multiline
-							rows="4"
-							label="Description"
-							className={classes.textField}
-							value={description}
-							onChange={this.onChange}
-							margin="normal"
-							name="description"
-							placeholder="A description for the feed"
-						/>
-
-						<Button type="submit" variant="contained" color="primary" className={classes.button}>
-							Create Feed
-						</Button>
-					</form>
-				</Paper>
-			</div>
-		)
-	}
+					<Button type="submit" variant="contained" color="primary" className={classes.button}>
+						Create Feed
+					</Button>
+				</form>
+			</Paper>
+		</div>
+	)
 }
 
 AddFeed.propTypes = {
 	classes: PropTypes.object.isRequired,
-	addFeed: PropTypes.func.isRequired,
 	enqueueSnackbar: PropTypes.func.isRequired,
 }
 
 export default compose(
 	withStyles(styles),
 	withRouter,
-	withSnackbar,
-	graphql(ADD_FEED, {
-		name: 'addFeed',
-		options: {
-			update: (store, { data: { post } }) => {
-				// How to solve it?
-				try {
-					const data = store.readQuery({ query: GET_FEEDS })
-					data.feed.links.unshift(post)
-					store.writeQuery({
-						query: GET_FEEDS,
-						data,
-					})
-				} catch (e) {
-					console.error('Error to update chache', e)
-				}
-			},
-		},
-	})
+	withSnackbar
 )(AddFeed)

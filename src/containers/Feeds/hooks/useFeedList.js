@@ -7,7 +7,7 @@ import { VOTE_MUTATION } from 'qql/mutations/feed'
 
 const useFeedList = () => {
 	const [search, setSearch] = useState('')
-	const [order] = useState('createdAt_ASC')
+	const [order] = useState('createdAt_DESC')
 
 	// TODO: add error handler
 	const { loading, error, data, subscribeToMore } = useQuery(GET_FEEDS, {

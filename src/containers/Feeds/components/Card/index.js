@@ -21,7 +21,7 @@ const Feed = ({
 	classes,
 	handleVote,
 }) => (
-	<Grid item key={id} sm={12} md={6} lg={4}>
+	<Grid item key={id} xs={12} sm={6} lg={4}>
 		<Card className={classes.card}>
 			<CardMedia
 				className={classes.cardMedia}
