@@ -17,6 +17,7 @@ const defaultOptions = {
 		errorPolicy: 'all',
 	},
 	query: {
+		fetchPolicy: 'cache-and-network',
 		errorPolicy: 'all',
 	},
 	mutate: {
