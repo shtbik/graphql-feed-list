@@ -21,8 +21,8 @@ test@test.ru | 123456
 
 ## Deploy Client to Github
 
-1. yarn build
-2. git subtree push --prefix ./build origin gh-pages
+1. yarn predeploy
+2. yarn deploy
 
 ## Deploy Server to Heroku
 
