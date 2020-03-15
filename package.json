@@ -25,6 +25,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
+		"start:localgql": "REACT_APP_GQL_MODE=local react-scripts start",
 		"start:server": "cd server && yarn start",
 		"build": "REACT_APP_GQL_MODE=development react-scripts build",
 		"predeploy": "yarn build",

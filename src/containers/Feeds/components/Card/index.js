@@ -22,7 +22,7 @@ const Feed = ({
 	handleVote,
 }) => (
 	<Grid item key={id} xs={12} sm={6} lg={4}>
-		<Card className={classes.card}>
+		<Card>
 			<CardMedia
 				className={classes.cardMedia}
 				image={`https://picsum.photos/680/500?random=${id}&gravity=center`}

@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history'
 import { SnackbarProvider } from 'notistack'
 
 import Layout from 'containers/Layout'
-import client from 'configs/graphql'
+import client from 'gql/client'
 
 const history = createBrowserHistory({
 	basename: process.env.PUBLIC_URL,

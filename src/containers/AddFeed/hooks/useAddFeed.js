@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 
-import { ADD_FEED } from 'qql/mutations/feed'
-import { GET_FEEDS } from 'qql/queries/feed'
+import { ADD_FEED } from 'gql/mutations/feed'
+import { GET_FEEDS } from 'gql/queries/feed'
 
 const useAddFeed = () => {
 	const [url, setUrl] = useState('')

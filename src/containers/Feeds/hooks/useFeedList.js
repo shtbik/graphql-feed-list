@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import get from 'lodash/get'
 
-import { GET_FEEDS, NEW_FEEDS_SUBSCRIPTION, NEW_VOTES_SUBSCRIPTION } from 'qql/queries/feed'
-import { VOTE_MUTATION } from 'qql/mutations/feed'
+import { GET_FEEDS, NEW_FEEDS_SUBSCRIPTION, NEW_VOTES_SUBSCRIPTION } from 'gql/queries/feed'
+import { VOTE_MUTATION } from 'gql/mutations/feed'
 
 const useFeedList = () => {
 	const [search, setSearch] = useState('')

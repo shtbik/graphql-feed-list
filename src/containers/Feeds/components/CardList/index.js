@@ -8,27 +8,24 @@ import { withStyles } from '@material-ui/core/styles'
 import Loader from 'components/Loader'
 
 import Card from '../Card'
-import styles from '../../styles'
+import styles from './styles'
 
 const FeedList = ({ loading, error, data, handleVote, classes }) => {
-	if (loading) return <Loader wrapperClass={classes.loader} />
-	if (error)
-		return (
-			<div className={classes.error}>
-				<Typography variant="h6" align="center" paragraph>
-					Something happened on our end. Try again later
-				</Typography>
-			</div>
-		)
-
-	return !data.length ? (
+	const getErrorBlock = text => (
 		<div className={classes.error}>
 			<Typography variant="h6" align="center" paragraph>
-				Nothing found
+				{text}
 			</Typography>
 		</div>
+	)
+
+	if (loading) return <Loader wrapperClass={classes.loader} />
+	if (error) return getErrorBlock('Something happened on our end. Try again later')
+
+	return !data.length ? (
+		getErrorBlock('Nothing found')
 	) : (
-		<Grid container spacing={5}>
+		<Grid container spacing={3}>
 			{data.map(item => (
 				<Card key={item.id} feed={item} handleVote={handleVote} />
 			))}

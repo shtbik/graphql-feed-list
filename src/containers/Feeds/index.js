@@ -32,7 +32,7 @@ const FeedList = ({ enqueueSnackbar, classes }) => {
 			<HeroUnit />
 
 			<Content>
-				<Grid container spacing={5}>
+				<Grid container spacing={3}>
 					<Grid item sm={12} md={6} lg={4}>
 						<Search wrapperClass={classes.searchBlock} handleSearch={setSearch} />
 					</Grid>

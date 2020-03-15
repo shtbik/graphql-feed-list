@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 
 import { AUTH_TOKEN, AUTH_USER } from 'configs/consts'
-import { LOGIN_MUTATION, SIGNUP_MUTATION } from 'qql/mutations/auth'
+import { LOGIN_MUTATION, SIGNUP_MUTATION } from 'gql/mutations/auth'
 
 import styles from './styles'
 
