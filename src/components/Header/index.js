@@ -42,7 +42,7 @@ const Header = ({ history: { push }, classes }) => {
 					<div>
 						{authToken ? (
 							<>
-								<Button component={Link} to="/me" color="inherit">
+								<Button color="inherit">
 									{name} <AccountBox className={classes.icon} />
 								</Button>
 								<Button onClick={onLogout} color="inherit">

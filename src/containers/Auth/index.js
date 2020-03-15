@@ -21,29 +21,11 @@ import useAuth from './hooks/useAuth'
 
 import styles from './styles'
 
-const Auth = ({ location: { pathname }, enqueueSnackbar, history, classes }) => {
-	const { login, signUp, formData, setFormData } = useAuth()
-	const { email, password, name } = formData
+const Auth = ({ location: { pathname }, history: { push }, enqueueSnackbar, classes }) => {
 	const formName = pathname.slice(1)
+	const isSignUpPage = formName === 'sign-up'
 
-	const formsConfig = {
-		'sign-in': {
-			title: 'Sign In',
-			submitBtnText: 'Sign In',
-			onSubmit: login,
-		},
-		'sign-up': {
-			title: 'Sign Up',
-			submitBtnText: 'Sign Up',
-			onSubmit: signUp,
-		},
-	}
-
-	const formConfig = formsConfig[formName]
-	const isSignUpPage = formsConfig[formName].title === 'Sign Up'
-
-	const saveUserData = userData => {
-		const { token, user } = userData
+	const saveUserData = ({ token, user }) => {
 		localStorage.setItem(AUTH_TOKEN, token)
 		localStorage.setItem(AUTH_USER, JSON.stringify(user))
 	}
@@ -51,21 +33,37 @@ const Auth = ({ location: { pathname }, enqueueSnackbar, history, classes }) => 
 	const confirmAuth = data => {
 		const userData = isSignUpPage ? data.signup : data.login
 		saveUserData(userData)
-		history.push(`/`)
+		push(`/`)
 	}
+
+	const { login, signUp, formData, setFormData } = useAuth()
+	const { email, password, name } = formData
+
+	const formsConfig = {
+		'sign-in': {
+			title: 'Sign In',
+			submitBtnText: 'Sign In',
+			handleSubmit: login,
+		},
+		'sign-up': {
+			title: 'Sign Up',
+			submitBtnText: 'Sign Up',
+			handleSubmit: signUp,
+		},
+	}
+
+	const formConfig = formsConfig[formName]
+	const { title, submitBtnText, handleSubmit } = formConfig
 
 	const onSubmit = e => {
 		e.preventDefault()
 
-		formConfig
-			.onSubmit({
-				variables: formData,
-			})
-			.then(res => {
-				const { errors, data } = res
+		handleSubmit()
+			.then(({ data, errors }) => {
 				if (errors) errors.map(error => enqueueSnackbar(error.message, { variant: 'error' }))
 				else confirmAuth(data)
 			})
+			// https://stackoverflow.com/questions/59465864/handling-errors-with-react-apollo-usemutation-hook
 			.catch(() => {
 				enqueueSnackbar('Something went wrong. Please try again later.', { variant: 'error' })
 			})
@@ -88,7 +86,7 @@ const Auth = ({ location: { pathname }, enqueueSnackbar, history, classes }) => 
 					<LockIcon />
 				</Avatar>
 				<Typography component="h1" variant="h5">
-					{formConfig.title}
+					{title}
 				</Typography>
 				<form className={classes.form} onSubmit={onSubmit}>
 					<FormControl margin="normal" required fullWidth>
@@ -123,7 +121,7 @@ const Auth = ({ location: { pathname }, enqueueSnackbar, history, classes }) => 
 					</FormControl>
 
 					<Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-						{formConfig.submitBtnText}
+						{submitBtnText}
 					</Button>
 				</form>
 			</Paper>

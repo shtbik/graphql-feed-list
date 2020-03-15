@@ -10,8 +10,10 @@ const useAddFeed = () => {
 		password: '',
 	})
 
-	const [login] = useMutation(LOGIN_MUTATION)
-	const [signUp] = useMutation(SIGNUP_MUTATION)
+	const variables = formData
+
+	const [login] = useMutation(LOGIN_MUTATION, { variables })
+	const [signUp] = useMutation(SIGNUP_MUTATION, { variables })
 
 	return { login, signUp, formData, setFormData }
 }
