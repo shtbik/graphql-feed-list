@@ -15,8 +15,6 @@ const useAddFeed = () => {
 		setDescription('')
 	}
 
-	// TODO: item will be added to cache, but GET_FEEDS will be called one more time
-	// need to fix
 	const [addFeed] = useMutation(ADD_FEED, {
 		update: (store, { data: { post } }) => {
 			try {

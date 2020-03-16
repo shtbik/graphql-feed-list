@@ -45,7 +45,7 @@ https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/buil
 
 ## TODO
 
-- refactoring, move to hooks style
+- add pagination
 - add upvoting feature
 - add personal page with list of contents
 - add new fields (title, source, author, etc.) to feed model

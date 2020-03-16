@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash/debounce'
 
@@ -24,14 +24,14 @@ const Search = ({ handleSearch, wrapperClass, classes }) => {
 		handleSearch(value)
 	}
 
-	const debouncedSearch = debounce(value => handleSearch(value), 2000)
+	const delayedSearch = useCallback(debounce(value => handleSearch(value), 1000), [])
 
 	const onChange = event => {
 		event.preventDefault()
 		const { value } = event.target
 
 		setSearch(value)
-		debouncedSearch(value)
+		delayedSearch(value)
 	}
 
 	return (

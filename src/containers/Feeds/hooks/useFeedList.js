@@ -20,6 +20,7 @@ const useFeedList = () => {
 			filter: search,
 			orderBy: order,
 		},
+		fetchPolicy: 'cache-first',
 	})
 
 	const [voteForFeed] = useMutation(VOTE_MUTATION)
