@@ -4,8 +4,9 @@ const styles = theme => ({
 		padding: '50px',
 		...theme.typography.subtitle1,
 	},
-	searchBlock: {
-		marginBottom: '30px',
+	loader: {
+		position: 'relative',
+		height: '300px',
 	},
 })
 

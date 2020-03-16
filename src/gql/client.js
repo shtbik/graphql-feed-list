@@ -6,8 +6,8 @@ import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
-import getApolloURI from './getApolloUrl'
-import { AUTH_TOKEN } from './consts'
+import getApolloURI from 'utils/getApolloEndpoint'
+import { AUTH_TOKEN } from 'configs/consts'
 
 const { host, ssl, wss } = getApolloURI()
 
@@ -17,6 +17,7 @@ const defaultOptions = {
 		errorPolicy: 'all',
 	},
 	query: {
+		fetchPolicy: 'cache-and-network',
 		errorPolicy: 'all',
 	},
 	mutate: {

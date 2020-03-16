@@ -21,8 +21,8 @@ test@test.ru | 123456
 
 ## Deploy Client to Github
 
-1. yarn build
-2. git subtree push --prefix ./build origin gh-pages
+1. yarn predeploy
+2. yarn deploy
 
 ## Deploy Server to Heroku
 
@@ -45,7 +45,7 @@ https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/buil
 
 ## TODO
 
-- refactoring, move to hooks style
+- add pagination
 - add upvoting feature
 - add personal page with list of contents
 - add new fields (title, source, author, etc.) to feed model

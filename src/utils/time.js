@@ -1,3 +1,5 @@
+// TODO: add tests
+
 function timeDifference(current, previous) {
 	const milliSecondsPerMinute = 60 * 1000
 	const milliSecondsPerHour = milliSecondsPerMinute * 60

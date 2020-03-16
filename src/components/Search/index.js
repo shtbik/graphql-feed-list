@@ -1,63 +1,64 @@
-import React, { PureComponent } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import debounce from 'lodash/debounce'
 
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 
-import debounce from 'utils/debounce'
-
 import styles from './styles'
 
-class Search extends PureComponent {
-	state = {
-		text: '',
+const Search = ({ handleSearch, wrapperClass, classes }) => {
+	const [search, setSearch] = useState('')
+
+	const onSearch = event => {
+		event.preventDefault()
+		const {
+			target: {
+				elements: {
+					search: { value },
+				},
+			},
+		} = event
+
+		setSearch(value)
+		handleSearch(value)
 	}
 
-	onSearch = debounce(value => {
-		const { onSearch, getInitialList } = this.props
+	const delayedSearch = useCallback(debounce(value => handleSearch(value), 1000), [])
 
-		if (!value) getInitialList()
-		else onSearch(value)
-	}, 300)
+	const onChange = event => {
+		event.preventDefault()
+		const { value } = event.target
 
-	onInputChange = e => {
-		const { value } = e.target
-		e.preventDefault()
-		this.setState({ text: value })
-
-		this.onSearch(value)
+		setSearch(value)
+		delayedSearch(value)
 	}
 
-	render() {
-		const { className, classes } = this.props
-		const { text } = this.state
-
-		return (
-			<div className={className}>
-				<form onSubmit={this.onSearch}>
-					<TextField
-						id="filled-search"
-						label="Search feed"
-						type="search"
-						margin="normal"
-						value={text}
-						onChange={this.onInputChange}
-						className={classes.textField}
-					/>
-				</form>
-			</div>
-		)
-	}
+	return (
+		<div className={wrapperClass}>
+			<form onSubmit={onSearch}>
+				<TextField
+					name="search"
+					id="filled-search"
+					label="React, GQL, etc."
+					type="search"
+					margin="normal"
+					value={search}
+					onChange={onChange}
+					className={classes.textField}
+				/>
+			</form>
+		</div>
+	)
 }
 
 Search.propTypes = {
-	className: PropTypes.string,
-	onSearch: PropTypes.func.isRequired,
-	getInitialList: PropTypes.func.isRequired,
+	handleSearch: PropTypes.func.isRequired,
+	wrapperClass: PropTypes.string,
 	classes: PropTypes.object.isRequired,
 }
 Search.defaultProps = {
-	className: '',
+	wrapperClass: '',
 }
 
 export default withStyles(styles)(Search)

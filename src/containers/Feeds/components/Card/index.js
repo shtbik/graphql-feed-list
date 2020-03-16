@@ -21,8 +21,8 @@ const Feed = ({
 	classes,
 	handleVote,
 }) => (
-	<Grid item key={id} sm={12} md={6} lg={4}>
-		<Card className={classes.card}>
+	<Grid item key={id} xs={12} sm={6} lg={4}>
+		<Card>
 			<CardMedia
 				className={classes.cardMedia}
 				image={`https://picsum.photos/680/500?random=${id}&gravity=center`}
@@ -49,7 +49,7 @@ const Feed = ({
 					<ThumbUp />
 				</IconButton>
 
-				{/* TODO: add unvote functionality */}
+				{/* TODO: add unvote feature */}
 				{/* <IconButton className={classes.button} aria-label="ThumbDown" color="secondary">
           <ThumbDown />
         </IconButton> */}

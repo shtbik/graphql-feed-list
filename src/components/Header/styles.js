@@ -4,7 +4,7 @@ const styles = theme => ({
 		flexGrow: 1,
 	},
 	logoIcon: {
-		marginRight: theme.spacing.unit * 2,
+		marginRight: theme.spacing(2),
 	},
 	logo: {
 		flexGrow: 1,
@@ -15,7 +15,7 @@ const styles = theme => ({
 		},
 	},
 	icon: {
-		marginLeft: theme.spacing.unit,
+		marginLeft: theme.spacing(1),
 	},
 })
 

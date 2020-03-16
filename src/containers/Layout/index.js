@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 
@@ -11,8 +11,8 @@ import routes from 'routes'
 
 import styles from './styles'
 
-const App = ({ classes }) => (
-	<Fragment>
+const Layout = ({ classes }) => (
+	<>
 		<Header />
 		<main className={classes.mainBlock}>
 			<Switch>
@@ -23,11 +23,11 @@ const App = ({ classes }) => (
 			</Switch>
 		</main>
 		<Footer />
-	</Fragment>
+	</>
 )
 
-App.propTypes = {
+Layout.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(App)
+export default withStyles(styles)(Layout)

@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Link, withRouter } from 'react-router-dom'
@@ -17,58 +17,53 @@ import { AUTH_TOKEN, AUTH_USER } from 'configs/consts'
 
 import styles from './styles'
 
-class Header extends Component {
-	logout = () => {
-		const {
-			history: { push },
-		} = this.props
+const Header = ({ history: { push }, classes }) => {
+	const onLogout = () => {
 		localStorage.removeItem(AUTH_TOKEN)
 		push(`/`)
 	}
 
-	render() {
-		const { classes } = this.props
-		const authToken = localStorage.getItem(AUTH_TOKEN)
-		const userData = JSON.parse(localStorage.getItem(AUTH_USER)) || {}
-		const { name } = userData
+	// TODO: move to useLocalStorage hook for sync browser's tabs
+	const authToken = localStorage.getItem(AUTH_TOKEN)
+	const userData = JSON.parse(localStorage.getItem(AUTH_USER)) || {}
+	const { name } = userData
 
-		return (
-			<Fragment>
-				<CssBaseline />
-				<AppBar position="static" className={classes.appBar}>
-					<Toolbar>
-						<GestureIcon className={classes.logoIcon} />
-						<Typography variant="h6" noWrap className={classes.logo}>
-							<Link color="inherit" to="/">
-								GraphQL Client App
-							</Link>
-						</Typography>
-						<div>
-							{authToken ? (
-								<Fragment>
-									<Button component={Link} to="/me" color="inherit">
-										{name} <AccountBox className={classes.icon} />
-									</Button>
-									<Button onClick={this.logout} color="inherit">
-										Logout <ExitToApp className={classes.icon} />
-									</Button>
-								</Fragment>
-							) : (
-								<Fragment>
-									<Button component={Link} to="/sign-in" color="inherit">
-										Sign In
-									</Button>
-									<Button component={Link} to="/sign-up" color="inherit">
-										Sign Up
-									</Button>
-								</Fragment>
-							)}
-						</div>
-					</Toolbar>
-				</AppBar>
-			</Fragment>
-		)
-	}
+	return (
+		<>
+			<CssBaseline />
+			<AppBar position="static" className={classes.appBar}>
+				<Toolbar>
+					<GestureIcon className={classes.logoIcon} />
+					<Typography variant="h6" noWrap className={classes.logo}>
+						<Link color="inherit" to="/">
+							GraphQL Client App
+						</Link>
+					</Typography>
+					<div>
+						{authToken ? (
+							<>
+								<Button color="inherit">
+									{name} <AccountBox className={classes.icon} />
+								</Button>
+								<Button onClick={onLogout} color="inherit">
+									Logout <ExitToApp className={classes.icon} />
+								</Button>
+							</>
+						) : (
+							<>
+								<Button component={Link} to="/sign-in" color="inherit">
+									Sign In
+								</Button>
+								<Button component={Link} to="/sign-up" color="inherit">
+									Sign Up
+								</Button>
+							</>
+						)}
+					</div>
+				</Toolbar>
+			</AppBar>
+		</>
+	)
 }
 
 Header.propTypes = {

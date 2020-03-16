@@ -1,12 +1,12 @@
 const styles = theme => ({
 	main: {
-		paddingTop: theme.spacing.unit * 8,
-		paddingBottom: theme.spacing.unit * 8,
+		paddingTop: theme.spacing(8),
+		paddingBottom: theme.spacing(8),
 		width: 'auto',
 		display: 'block', // Fix IE 11 issue.
-		marginLeft: theme.spacing.unit * 3,
-		marginRight: theme.spacing.unit * 3,
-		[theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+		marginLeft: theme.spacing(3),
+		marginRight: theme.spacing(3),
+		[theme.breakpoints.up(400 + theme.spacing(3) * 2)]: {
 			width: 400,
 			marginLeft: 'auto',
 			marginRight: 'auto',
@@ -16,7 +16,7 @@ const styles = theme => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+		padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
 	},
 	container: {
 		display: 'flex',
@@ -26,13 +26,12 @@ const styles = theme => ({
 		margin: 'auto',
 	},
 	textField: {
-		marginLeft: theme.spacing.unit,
-		marginRight: theme.spacing.unit,
-		// width: 200,
-		marginBottom: theme.spacing.unit,
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+		marginBottom: theme.spacing(1),
 	},
 	button: {
-		marginTop: theme.spacing.unit * 3,
+		marginTop: theme.spacing(3),
 	},
 })
 

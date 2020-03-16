@@ -1,16 +1,16 @@
-const styles = theme => ({
+const styles = ({ spacing, breakpoints }) => ({
 	layout: {
 		width: 'auto',
-		marginLeft: theme.spacing.unit * 3,
-		marginRight: theme.spacing.unit * 3,
-		[theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+		marginLeft: spacing(3),
+		marginRight: spacing(3),
+		[breakpoints.up(1100 + spacing(3) * 2)]: {
 			width: 1100,
 			marginLeft: 'auto',
 			marginRight: 'auto',
 		},
 	},
 	content: {
-		padding: `${theme.spacing.unit * 8}px 0`,
+		padding: `${spacing(8)}px 0`,
 	},
 })
 
