@@ -5,23 +5,65 @@ import get from 'lodash/get'
 import { GET_FEEDS, NEW_FEEDS_SUBSCRIPTION, NEW_VOTES_SUBSCRIPTION } from 'gql/queries/feed'
 import { VOTE_MUTATION } from 'gql/mutations/feed'
 
+export const defaultPageSize = 12
+
 export const initialValues = {
 	filter: '',
 	orderBy: 'createdAt_DESC',
+	first: defaultPageSize,
+	skip: 0,
 }
 
 const useFeedList = () => {
 	const [search, setSearch] = useState(initialValues.filter)
 	const [order] = useState(initialValues.orderBy)
+	const [first] = useState(initialValues.first)
+	const [skip, setSkip] = useState(initialValues.skip)
+
+	const variables = {
+		filter: search,
+		orderBy: order,
+		first,
+	}
 
 	// TODO: add global error handler
-	const { loading, error, data, subscribeToMore } = useQuery(GET_FEEDS, {
+	const { loading, error, data: res, fetchMore, subscribeToMore } = useQuery(GET_FEEDS, {
 		variables: {
-			filter: search,
-			orderBy: order,
+			...variables,
+			skip: 0,
 		},
 		fetchPolicy: 'cache-first',
 	})
+
+	const data = get(res, ['feed', 'links']) || []
+	const total = get(res, ['feed', 'count'])
+
+	function fetchMoreFeeds(__loading, setFetchMoreLoading) {
+		const nextSkipValue = skip + defaultPageSize
+		if (data.length === total) {
+			setFetchMoreLoading(false)
+			return false
+		}
+
+		return fetchMore({
+			variables: { ...variables, skip: nextSkipValue },
+			updateQuery: (prev, { fetchMoreResult }) => {
+				if (!fetchMoreResult.feed) return prev
+				const {
+					feed: { count, links: nextLinks },
+				} = fetchMoreResult
+				const {
+					feed: { links, __typename: typename },
+				} = prev
+
+				return { ...prev, feed: { links: links.concat(nextLinks), count, __typename: typename } }
+			},
+		})
+			.then(() => setSkip(nextSkipValue))
+			.finally(() => {
+				setFetchMoreLoading(false)
+			})
+	}
 
 	const [voteForFeed] = useMutation(VOTE_MUTATION)
 
@@ -59,7 +101,9 @@ const useFeedList = () => {
 	return {
 		loading,
 		error,
-		data: get(data, ['feed', 'links']),
+		data,
+		total,
+		fetchMore: fetchMoreFeeds,
 		setSearch,
 		voteForFeed,
 	}

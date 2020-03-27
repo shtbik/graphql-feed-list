@@ -16,8 +16,8 @@ const LinkOrderByInput = gql`
 `
 
 const GET_FEEDS = gql`
-	query feedList($orderBy: LinkOrderByInput, $filter: String) {
-		feed(orderBy: $orderBy, filter: $filter) {
+	query feedList($orderBy: LinkOrderByInput, $filter: String, $skip: Int, $first: Int) {
+		feed(orderBy: $orderBy, filter: $filter, skip: $skip, first: $first) {
 			links {
 				id
 				createdAt
@@ -34,6 +34,7 @@ const GET_FEEDS = gql`
 					}
 				}
 			}
+			count
 		}
 	}
 `

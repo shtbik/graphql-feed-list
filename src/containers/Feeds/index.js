@@ -2,20 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Grid from '@material-ui/core/Grid'
+
 import { withStyles } from '@material-ui/core/styles'
 import { withSnackbar } from 'notistack'
 
 import Content from 'components/Content'
 import HeroUnit from 'components/HeroUnit'
-
+import Loader from 'components/Loader'
 import Search from 'components/Search'
+import useInfiniteScroll from 'utils/hooks/useInfiniteScroll'
+
 import CardList from './components/CardList'
 import useFeedList from './hooks/useFeedList'
 
 import styles from './styles'
 
 const FeedList = ({ enqueueSnackbar, classes }) => {
-	const { loading, error, data, setSearch, voteForFeed } = useFeedList()
+	const { loading, error, data, total, fetchMore, setSearch, voteForFeed } = useFeedList()
+
+	const [isFetchMoreLoading] = useInfiniteScroll(fetchMore)
 
 	const handleVote = linkId => {
 		voteForFeed({
@@ -36,8 +41,12 @@ const FeedList = ({ enqueueSnackbar, classes }) => {
 					<Grid item sm={12} md={6} lg={4}>
 						<Search wrapperClass={classes.searchBlock} handleSearch={setSearch} />
 					</Grid>
-					<Grid item sm={12}>
+					<Grid item sm={12} className={classes.cardList}>
 						<CardList loading={loading} error={error} data={data} handleVote={handleVote} />
+
+						{isFetchMoreLoading && data.length && data.length !== total ? (
+							<Loader wrapperClass={classes.fetchMoreLoader} />
+						) : null}
 					</Grid>
 				</Grid>
 			</Content>
@@ -47,7 +56,6 @@ const FeedList = ({ enqueueSnackbar, classes }) => {
 
 FeedList.propTypes = {
 	classes: PropTypes.object.isRequired,
-
 	enqueueSnackbar: PropTypes.func.isRequired,
 }
 

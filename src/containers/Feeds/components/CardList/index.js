@@ -36,13 +36,12 @@ const FeedList = ({ loading, error, data, handleVote, classes }) => {
 FeedList.propTypes = {
 	loading: PropTypes.bool.isRequired,
 	error: PropTypes.object,
-	data: PropTypes.array,
+	data: PropTypes.array.isRequired,
 	classes: PropTypes.object.isRequired,
 	handleVote: PropTypes.func.isRequired,
 }
 
 FeedList.defaultProps = {
-	data: [],
 	error: null,
 }
 
