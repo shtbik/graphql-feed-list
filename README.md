@@ -45,7 +45,7 @@ https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/buil
 
 ## TODO
 
-- add pagination
+- fix bugs with search after implementation of infinity loader
 - change schemes format
 - add upvoting feature
 - add personal page with list of contents
