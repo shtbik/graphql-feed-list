@@ -1,6 +1,8 @@
 {
 	"parser": "babel-eslint",
 	"rules": {
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn",
 		"import/prefer-default-export": "off",
 		"react/prefer-stateless-function": [
 			1,
@@ -67,5 +69,5 @@
 		},
 		"ecmaVersion": 6
 	},
-	"plugins": ["react", "prettier"]
+	"plugins": ["react", "prettier", "react-hooks"]
 }

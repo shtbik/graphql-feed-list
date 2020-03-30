@@ -19,7 +19,7 @@ test@test.ru | 123456
 5. localhost:3000 - client
 6. localhost:4000 - server
 
-## Deploy Client to Github
+## Deploy Client to Github Pages
 
 1. yarn predeploy
 2. yarn deploy
