@@ -9,7 +9,7 @@ const styles = ({ spacing }) => ({
 		position: 'relative',
 		width: 'auto',
 		height: 'auto',
-		marginTop: spacing(4),
+		marginTop: spacing(8),
 	},
 })
 

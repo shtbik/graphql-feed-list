@@ -20,7 +20,7 @@ const useFeedList = () => {
 	const [first] = useState(initialValues.first)
 	const [skip, setSkip] = useState(initialValues.skip)
 
-	const variables = {
+	const queryVariables = {
 		filter: search,
 		orderBy: order,
 		first,
@@ -29,7 +29,7 @@ const useFeedList = () => {
 	// TODO: add global error handler
 	const { loading, error, data: res, fetchMore, subscribeToMore } = useQuery(GET_FEEDS, {
 		variables: {
-			...variables,
+			...queryVariables,
 			skip: 0,
 		},
 		fetchPolicy: 'cache-first',
@@ -38,15 +38,16 @@ const useFeedList = () => {
 	const data = get(res, ['feed', 'links']) || []
 	const total = get(res, ['feed', 'count'])
 
-	function fetchMoreFeeds(__loading, setFetchMoreLoading) {
+	function handleFetchMore(_loading, setFetchMoreLoading) {
 		const nextSkipValue = skip + defaultPageSize
-		if (data.length === total) {
+
+		if (nextSkipValue > total) {
 			setFetchMoreLoading(false)
 			return false
 		}
 
 		return fetchMore({
-			variables: { ...variables, skip: nextSkipValue },
+			variables: { ...queryVariables, skip: nextSkipValue },
 			updateQuery: (prev, { fetchMoreResult }) => {
 				if (!fetchMoreResult.feed) return prev
 				const {
@@ -60,9 +61,7 @@ const useFeedList = () => {
 			},
 		})
 			.then(() => setSkip(nextSkipValue))
-			.finally(() => {
-				setFetchMoreLoading(false)
-			})
+			.finally(() => setFetchMoreLoading(false))
 	}
 
 	const [voteForFeed] = useMutation(VOTE_MUTATION)
@@ -103,7 +102,7 @@ const useFeedList = () => {
 		error,
 		data,
 		total,
-		fetchMore: fetchMoreFeeds,
+		fetchMore: handleFetchMore,
 		setSearch,
 		voteForFeed,
 	}
