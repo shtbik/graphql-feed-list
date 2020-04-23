@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import get from 'lodash/get'
+import uniqWith from 'lodash/uniqWith'
+import isEqual from 'lodash/isEqual'
 
 import { GET_FEEDS, NEW_FEEDS_SUBSCRIPTION, NEW_VOTES_SUBSCRIPTION } from 'gql/queries/feed'
 import { VOTE_MUTATION } from 'gql/mutations/feed'
@@ -57,7 +59,10 @@ const useFeedList = () => {
 					feed: { links, __typename: typename },
 				} = prev
 
-				return { ...prev, feed: { links: links.concat(nextLinks), count, __typename: typename } }
+				return {
+					...prev,
+					feed: { links: uniqWith(links.concat(nextLinks), isEqual), count, __typename: typename },
+				}
 			},
 		})
 			.then(() => setSkip(nextSkipValue))
@@ -80,7 +85,7 @@ const useFeedList = () => {
 					return {
 						...prev,
 						feed: {
-							links: [newLink, ...links],
+							links: uniqWith([newLink, ...links], isEqual),
 							count: links.length + 1,
 							__typename: typename,
 						},
@@ -104,6 +109,7 @@ const useFeedList = () => {
 		total,
 		fetchMore: handleFetchMore,
 		setSearch,
+		setSkip,
 		voteForFeed,
 	}
 }

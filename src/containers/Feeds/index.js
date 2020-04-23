@@ -18,7 +18,7 @@ import useFeedList from './hooks/useFeedList'
 import styles from './styles'
 
 const FeedList = ({ enqueueSnackbar, classes }) => {
-	const { loading, error, data, total, fetchMore, setSearch, voteForFeed } = useFeedList()
+	const { loading, error, data, total, fetchMore, setSearch, setSkip, voteForFeed } = useFeedList()
 
 	const [isFetchMoreLoading] = useInfiniteScroll(fetchMore)
 
@@ -32,6 +32,13 @@ const FeedList = ({ enqueueSnackbar, classes }) => {
 		})
 	}
 
+	const handleSearch = searchQuery => {
+		// have issue when user loaded all items, then found something special,
+		// then remove his query. His 'skip' value - 0, but he will see all items
+		setSkip(0)
+		setSearch(searchQuery)
+	}
+
 	return (
 		<>
 			<HeroUnit />
@@ -39,7 +46,7 @@ const FeedList = ({ enqueueSnackbar, classes }) => {
 			<Content>
 				<Grid container spacing={3}>
 					<Grid item sm={12} md={6} lg={4}>
-						<Search wrapperClass={classes.searchBlock} handleSearch={setSearch} />
+						<Search wrapperClass={classes.searchBlock} handleSearch={handleSearch} />
 					</Grid>
 					<Grid item sm={12} className={classes.cardList}>
 						<CardList loading={loading} error={error} data={data} handleVote={handleVote} />
