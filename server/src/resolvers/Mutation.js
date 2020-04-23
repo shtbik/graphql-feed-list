@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { OAuth2Client } = require('google-auth-library')
+
 const { APP_SECRET, getUserId } = require('../utils')
+const { GOOGLE_CLIENT_ID, GOOGLE_BACK_ID } = require('../configs/oauth')
 
 function post(parent, args, context) {
 	const userId = getUserId(context)
@@ -21,6 +24,55 @@ async function signup(parent, args, context) {
 	return {
 		token,
 		user,
+	}
+}
+
+// TODO: need refactoring
+async function oAuthLogin(parent, { provider, token: idToken }, context) {
+	async function verify() {
+		const client = new OAuth2Client(GOOGLE_BACK_ID)
+
+		const ticket = await client.verifyIdToken({
+			idToken,
+			audience: GOOGLE_CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
+			// Or, if multiple clients access the backend:
+			// [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+		})
+		const payload = ticket.getPayload()
+
+		// If request specified a G Suite domain:
+		// const domain = payload['hd'];
+
+		const user = await context.prisma.user({ email: payload.email })
+
+		if (!user) {
+			const password = await bcrypt.hash('test1234', 10)
+			const newUser = await context.prisma.createUser({
+				name: payload.name,
+				email: payload.email,
+				password,
+			})
+			const token = jwt.sign({ userId: newUser.id }, APP_SECRET)
+
+			return {
+				token,
+				user: newUser,
+			}
+		}
+
+		return {
+			token: jwt.sign({ userId: user.id }, APP_SECRET),
+			user,
+		}
+	}
+
+	switch (provider) {
+		case 'google': {
+			const res = await verify().catch(console.error)
+			return res
+		}
+
+		default:
 	}
 }
 
@@ -60,6 +112,7 @@ async function vote(parent, args, context) {
 module.exports = {
 	post,
 	signup,
+	oAuthLogin,
 	login,
 	vote,
 }

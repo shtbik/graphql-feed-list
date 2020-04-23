@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
+		"google-auth-library": "^6.0.0",
 		"graphql-yoga": "^1.7.0",
 		"jsonwebtoken": "^8.2.0",
 		"prisma-client-lib": "^1.22.2"

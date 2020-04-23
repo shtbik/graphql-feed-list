@@ -13,6 +13,19 @@ const SIGNUP_MUTATION = gql`
 	}
 `
 
+const OAUTH_MUTATION = gql`
+	mutation oAuthLogin($provider: String!, $token: String!) {
+		oAuthLogin(provider: $provider, token: $token) {
+			token
+			user {
+				id
+				name
+				email
+			}
+		}
+	}
+`
+
 const LOGIN_MUTATION = gql`
 	mutation login($email: String!, $password: String!) {
 		login(email: $email, password: $password) {
@@ -26,4 +39,4 @@ const LOGIN_MUTATION = gql`
 	}
 `
 
-export { SIGNUP_MUTATION, LOGIN_MUTATION }
+export { SIGNUP_MUTATION, OAUTH_MUTATION, LOGIN_MUTATION }

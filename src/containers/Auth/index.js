@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { withSnackbar } from 'notistack'
 
+import OAuth from 'containers/OAuth'
 import { AUTH_TOKEN, AUTH_USER } from 'configs/consts'
 
 import useAuth from './hooks/useAuth'
@@ -123,6 +124,8 @@ const Auth = ({ location: { pathname }, history: { push }, enqueueSnackbar, clas
 					<Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
 						{submitBtnText}
 					</Button>
+
+					<OAuth className={classes.oauth} providers={['google']} />
 				</form>
 			</Paper>
 		</main>
@@ -136,8 +139,4 @@ Auth.propTypes = {
 	enqueueSnackbar: PropTypes.func.isRequired,
 }
 
-export default compose(
-	withStyles(styles),
-	withSnackbar,
-	withRouter
-)(Auth)
+export default compose(withStyles(styles), withSnackbar, withRouter)(Auth)

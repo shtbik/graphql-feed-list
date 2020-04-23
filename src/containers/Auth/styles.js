@@ -29,6 +29,9 @@ const styles = theme => ({
 	submit: {
 		marginTop: theme.spacing(3),
 	},
+	oauth: {
+		marginTop: theme.spacing(2),
+	},
 })
 
 export default styles
