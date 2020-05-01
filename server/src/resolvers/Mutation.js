@@ -1,9 +1,8 @@
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const { OAuth2Client } = require('google-auth-library')
+const { omit } = require('lodash')
 
-const { APP_SECRET, getUserId } = require('../utils')
-const { GOOGLE_CLIENT_ID, GOOGLE_BACK_ID } = require('../configs/oauth')
+const { getToken, getUserId, generatePassword } = require('../utils/user')
+const { googleVerify } = require('../utils/oAuth')
 
 function post(parent, args, context) {
 	const userId = getUserId(context)
@@ -19,7 +18,7 @@ async function signup(parent, args, context) {
 	const password = await bcrypt.hash(args.password, 10)
 	const user = await context.prisma.createUser({ ...args, password })
 
-	const token = jwt.sign({ userId: user.id }, APP_SECRET)
+	const token = getToken(user)
 
 	return {
 		token,
@@ -27,53 +26,48 @@ async function signup(parent, args, context) {
 	}
 }
 
-// TODO: need refactoring
-async function oAuthLogin(parent, { provider, token: idToken }, context) {
-	async function verify() {
-		const client = new OAuth2Client(GOOGLE_BACK_ID)
-
-		const ticket = await client.verifyIdToken({
-			idToken,
-			audience: GOOGLE_CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
-			// Or, if multiple clients access the backend:
-			// [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-		})
-		const payload = ticket.getPayload()
-
-		// If request specified a G Suite domain:
-		// const domain = payload['hd'];
-
-		const user = await context.prisma.user({ email: payload.email })
-
-		if (!user) {
-			const password = await bcrypt.hash('test1234', 10)
-			const newUser = await context.prisma.createUser({
-				name: payload.name,
-				email: payload.email,
-				password,
-			})
-			const token = jwt.sign({ userId: newUser.id }, APP_SECRET)
-
-			return {
-				token,
-				user: newUser,
-			}
-		}
-
-		return {
-			token: jwt.sign({ userId: user.id }, APP_SECRET),
-			user,
-		}
-	}
-
+function getVerifyPromise(provider) {
 	switch (provider) {
-		case 'google': {
-			const res = await verify().catch(console.error)
-			return res
-		}
+		case 'google':
+			return googleVerify
 
 		default:
+			return null
 	}
+}
+
+async function oAuth(parent, { provider, token }, context) {
+	async function authentication(user) {
+		// TODO: change return value to Apollo Error
+		if (!user) throw new Error('Something happend')
+
+		const { email, name } = user
+		const existUser = await context.prisma.user({ email })
+
+		if (existUser)
+			return {
+				token: getToken(user),
+				user: omit(existUser, ['password']),
+			}
+
+		const password = await bcrypt.hash(generatePassword(), 10)
+		const newUser = await context.prisma.createUser({
+			name,
+			email,
+			password,
+		})
+
+		return {
+			token: getToken(newUser),
+			user: newUser,
+		}
+	}
+
+	const verifyPromise = getVerifyPromise(provider)
+	const userPayload = await verifyPromise(token)
+
+	const userRes = await authentication(userPayload)
+	return userRes
 }
 
 async function login(parent, args, context) {
@@ -88,7 +82,7 @@ async function login(parent, args, context) {
 	}
 
 	return {
-		token: jwt.sign({ userId: user.id }, APP_SECRET),
+		token: getToken(user),
 		user,
 	}
 }
@@ -112,7 +106,7 @@ async function vote(parent, args, context) {
 module.exports = {
 	post,
 	signup,
-	oAuthLogin,
+	oAuth,
 	login,
 	vote,
 }

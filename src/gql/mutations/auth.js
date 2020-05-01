@@ -14,8 +14,8 @@ const SIGNUP_MUTATION = gql`
 `
 
 const OAUTH_MUTATION = gql`
-	mutation oAuthLogin($provider: String!, $token: String!) {
-		oAuthLogin(provider: $provider, token: $token) {
+	mutation oAuth($provider: String!, $token: String!) {
+		oAuth(provider: $provider, token: $token) {
 			token
 			user {
 				id

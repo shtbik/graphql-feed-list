@@ -2,29 +2,37 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
+import { useLocalStorage } from '@rehooks/local-storage'
 
 import { GOOGLE_CLIENT_ID } from 'configs/oauth'
 import { AUTH_TOKEN, AUTH_USER } from 'configs/consts'
+import { withSnackbar } from 'notistack'
 
 import useOAuth from './hooks/useOAuth'
 
-const OAuth = ({ providers, className, history: { push } }) => {
-	const { oAuthLogin } = useOAuth()
+const OAuth = ({ providers, className, history: { push }, enqueueSnackbar }) => {
+	const { oAuth } = useOAuth()
+	const [, setToken] = useLocalStorage(AUTH_TOKEN)
+	const [, setUser] = useLocalStorage(AUTH_USER)
 
 	const saveUserData = ({ token, user }) => {
-		localStorage.setItem(AUTH_TOKEN, token)
-		localStorage.setItem(AUTH_USER, JSON.stringify(user))
+		setToken(token)
+		// TODO: remove data after logout
+		setUser(user)
 	}
 
-	// TODO: need refactoring
-	const responseGoogle = response => {
-		// TODO: add error handler
-		oAuthLogin({ variables: { provider: 'google', token: response.tokenId } }).then(
-			({ data: { oAuthLogin: user } }) => {
+	const googleRes = ({ error, tokenId }) => {
+		if (error) return
+
+		oAuth({ variables: { provider: 'google', token: tokenId } })
+			.then(({ data: { oAuth: user } }) => {
 				saveUserData(user)
 				push(`/`)
-			}
-		)
+			})
+			.catch(errors => {
+				console.log('catch', errors)
+				enqueueSnackbar('Something went wrong. Please try again later.', { variant: 'error' })
+			})
 	}
 
 	const config = {
@@ -32,8 +40,8 @@ const OAuth = ({ providers, className, history: { push } }) => {
 			<GoogleLogin
 				clientId={GOOGLE_CLIENT_ID}
 				buttonText="Google"
-				onSuccess={responseGoogle}
-				onFailure={responseGoogle}
+				onSuccess={googleRes}
+				onFailure={googleRes}
 				cookiePolicy="single_host_origin"
 				// isSignedIn
 			/>
@@ -53,6 +61,7 @@ OAuth.propTypes = {
 	providers: PropTypes.arrayOf(PropTypes.string),
 	className: PropTypes.string,
 	history: PropTypes.object.isRequired,
+	enqueueSnackbar: PropTypes.func.isRequired,
 }
 
 OAuth.defaultProps = {
@@ -60,4 +69,4 @@ OAuth.defaultProps = {
 	className: '',
 }
 
-export default withRouter(OAuth)
+export default withSnackbar(withRouter(OAuth))

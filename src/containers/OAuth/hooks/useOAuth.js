@@ -3,9 +3,9 @@ import { useMutation } from '@apollo/react-hooks'
 import { OAUTH_MUTATION } from 'gql/mutations/auth'
 
 const useOAuth = () => {
-	const [oAuthLogin] = useMutation(OAUTH_MUTATION)
+	const [oAuth] = useMutation(OAUTH_MUTATION)
 
-	return { oAuthLogin }
+	return { oAuth }
 }
 
 export default useOAuth
