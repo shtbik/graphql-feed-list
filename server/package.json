@@ -9,8 +9,10 @@
 		"prisma": "prisma"
 	},
 	"dependencies": {
+		"apollo-server": "^2.16.1",
 		"bcryptjs": "^2.4.3",
 		"google-auth-library": "^6.0.0",
+		"graphql-tools": "^6.0.15",
 		"graphql-yoga": "^1.7.0",
 		"jsonwebtoken": "^8.2.0",
 		"lodash": "^4.17.15",

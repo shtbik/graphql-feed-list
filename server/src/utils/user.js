@@ -16,7 +16,7 @@ function getToken({ id: userId }) {
 	return jwt.sign({ userId }, APP_SECRET)
 }
 
-function generatePassword(options) {
+function generatePassword(options = {}) {
 	const {
 		length = 8,
 		charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',

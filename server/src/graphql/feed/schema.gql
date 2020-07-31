@@ -1,0 +1,36 @@
+scalar DateTime
+
+extend type Query {
+	feed(filter: String, skip: Int, first: Int, orderBy: LinkOrderByInput): Feed!
+}
+
+extend type Mutation {
+	post(url: String!, description: String!): Link!
+}
+
+extend type Subscription {
+	newLink: Link
+}
+
+enum LinkOrderByInput {
+	description_ASC
+	description_DESC
+	url_ASC
+	url_DESC
+	createdAt_ASC
+	createdAt_DESC
+}
+
+type Feed {
+	links: [Link!]!
+	count: Int!
+}
+
+type Link {
+	id: ID!
+	createdAt: DateTime!
+	description: String!
+	url: String!
+	postedBy: User
+	votes: [Vote!]!
+}

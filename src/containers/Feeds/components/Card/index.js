@@ -29,9 +29,12 @@ const Feed = ({
 				title="Image title"
 			/>
 			<CardContent className={classes.cardContent}>
-				<Typography gutterBottom variant="h5" component="h2">
-					{description}
-				</Typography>
+				{/* TODO: make a component TitleLimit */}
+				<div className={classes.titleWrap}>
+					<Typography variant="h5" component="h2" className={classes.title}>
+						{description}
+					</Typography>
+				</div>
 				<Typography gutterBottom variant="subtitle1">
 					{postedBy ? postedBy.name : 'Unknown'} {timeDifferenceForDate(createdAt)}
 				</Typography>
