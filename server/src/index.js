@@ -3,6 +3,7 @@ const { makeExecutableSchema } = require('graphql-tools')
 
 const { prisma } = require('./generated/prisma-client')
 const { typeDefs, resolvers } = require('./utils/generateSchema')
+require('./utils/loadEnv')
 
 const server = new GraphQLServer({
 	schema: makeExecutableSchema({

@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken')
-const { APP_SECRET } = require('../configs/app')
 
 function getUserId(context) {
 	const Authorization = context.request.get('Authorization')
 	if (Authorization) {
 		const token = Authorization.replace('Bearer ', '')
-		const { userId } = jwt.verify(token, APP_SECRET)
+		const { userId } = jwt.verify(token, process.env.APP_SECRET)
 		return userId
 	}
 
@@ -13,7 +12,7 @@ function getUserId(context) {
 }
 
 function getToken({ id: userId }) {
-	return jwt.sign({ userId }, APP_SECRET)
+	return jwt.sign({ userId }, process.env.APP_SECRET)
 }
 
 function generatePassword(options = {}) {
