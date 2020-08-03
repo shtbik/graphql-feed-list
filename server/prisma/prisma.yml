@@ -1,5 +1,5 @@
 # Specifies the HTTP endpoint of your Prisma API.
-endpoint: https://eu1.prisma.sh/alexander-shtykov-ca308e/prisma/dev
+endpoint: ${env:PRISMA_ENDPOINT}
 
 # Defines your models, each model is mapped to the database as a table.
 datamodel: datamodel.prisma
@@ -7,12 +7,11 @@ datamodel: datamodel.prisma
 # Specifies the language and directory for the generated Prisma client.
 generate:
  - generator: javascript-client
-   output: ../src/generated/prisma-client
+   output: ../src/generated/prisma-client-${env:MODE}
  # - generator: graphql-schema
  #   output: ../src/generated/prisma-client/prisma.graphql
-
 # Ensures Prisma client is re-generated after a datamodel change.
-hooks:
- post-deploy:
-  - prisma generate
-  - graphql get-schema
+# hooks:
+# post-deploy:
+# - prisma generate
+# - graphql get-schema

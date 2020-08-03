@@ -14,3 +14,7 @@ const dotEnvVariables = config({ path: modes[mode] })
 if (!dotEnvVariables.parsed) {
 	throw dotEnvVariables.error
 }
+
+module.exports = {
+	...dotEnvVariables.parsed,
+}

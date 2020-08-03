@@ -1,9 +1,10 @@
+require('./utils/loadEnv')
+
 const { GraphQLServer } = require('graphql-yoga')
 const { makeExecutableSchema } = require('graphql-tools')
 
-const { prisma } = require('./generated/prisma-client')
+const { prisma } = require(`./generated/prisma-client-${process.env.MODE}`)
 const { typeDefs, resolvers } = require('./utils/generateSchema')
-require('./utils/loadEnv')
 
 const server = new GraphQLServer({
 	schema: makeExecutableSchema({
