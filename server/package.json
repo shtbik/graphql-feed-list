@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"license": "MIT",
 	"scripts": {
-		"start": "MODE=local node src/index.js",
+		"start": "node src/index.js",
 		"start:dev": "MODE=dev node src/index.js",
 		"start:prod": "MODE=prod node src/index.js",
 		"start:plgr": "yarn prisma playground",

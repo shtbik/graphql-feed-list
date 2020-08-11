@@ -12,7 +12,7 @@ const modes = {
 const dotEnvVariables = config({ path: modes[mode] })
 
 if (!dotEnvVariables.parsed) {
-	throw dotEnvVariables.error
+	console.error(`Didn't find .env.${mode}, will use process.env`, dotEnvVariables.error)
 }
 
 module.exports = {
