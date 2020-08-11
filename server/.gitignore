@@ -7,5 +7,4 @@ node_modules
 .idea
 .vscode
 src/configs/google-oath-credentials.json
-src/generated
 *.log
