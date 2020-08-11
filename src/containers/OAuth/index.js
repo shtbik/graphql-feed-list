@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 import { useLocalStorage } from '@rehooks/local-storage'
 
-import { GOOGLE_CLIENT_ID } from 'configs/oauth'
 import { AUTH_TOKEN, AUTH_USER } from 'configs/consts'
 import { withSnackbar } from 'notistack'
 
@@ -30,7 +29,7 @@ const OAuth = ({ providers, className, history: { push }, enqueueSnackbar }) => 
 				push(`/`)
 			})
 			.catch(errors => {
-				console.log('catch', errors)
+				console.error('catch', errors)
 				enqueueSnackbar('Something went wrong. Please try again later.', { variant: 'error' })
 			})
 	}
@@ -38,7 +37,7 @@ const OAuth = ({ providers, className, history: { push }, enqueueSnackbar }) => 
 	const config = {
 		google: (
 			<GoogleLogin
-				clientId={GOOGLE_CLIENT_ID}
+				clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
 				buttonText="Google"
 				onSuccess={googleRes}
 				onFailure={googleRes}

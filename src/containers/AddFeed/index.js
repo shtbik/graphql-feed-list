@@ -90,8 +90,4 @@ AddFeed.propTypes = {
 	enqueueSnackbar: PropTypes.func.isRequired,
 }
 
-export default compose(
-	withStyles(styles),
-	withRouter,
-	withSnackbar
-)(AddFeed)
+export default compose(withStyles(styles), withRouter, withSnackbar)(AddFeed)

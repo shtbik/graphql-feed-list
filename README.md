@@ -1,14 +1,15 @@
+## Demo
+
+PROD - https://client-feed-list-prod.herokuapp.com/ (EU)
+DEV - https://client-feed-list-dev.herokuapp.com/ (US)
+
+test@test.ru | 123456
+
 ## UI
 
 ![Example of WebSocket](https://i.imgur.com/c1I4wqn.gif)
 
 ![Example of Interface](https://imgur.com/BS7bMQF.png)
-
-## Demo
-
-https://shtbik.github.io/graphql-feed-list
-
-test@test.ru | 123456
 
 ## Start Project
 
@@ -19,10 +20,16 @@ test@test.ru | 123456
 5. localhost:3000 - client
 6. localhost:4000 - server
 
-## Deploy Client to Github Pages
+## Deploy Client to Heroku
 
-1. yarn predeploy
-2. yarn deploy
+1. yarn deploy:{env}
+
+https://medium.com/@agavitalis/how-to-deploy-a-simple-static-html-website-on-heroku-492697238e48
+
+## Deploy Schema to Prisma
+
+1. cd ./server
+2. prisma:deploy:{env}
 
 ## Deploy Server to Heroku
 
@@ -45,6 +52,8 @@ https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/buil
 
 ## TODO
 
+- move to monorepo for client and server sides
+- refactoring build commands
 - fix bugs with search after implementation of infinity loader
 - change schemes format
 - add upvoting feature
