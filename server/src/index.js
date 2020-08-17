@@ -1,3 +1,5 @@
+require('./utils/loadEnv')
+
 const { GraphQLServer } = require('graphql-yoga')
 const { makeExecutableSchema } = require('graphql-tools')
 
