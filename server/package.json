@@ -4,9 +4,9 @@
 	"private": true,
 	"license": "MIT",
 	"scripts": {
-		"start": "node src/index.js",
-		"start:dev": "MODE=dev node src/index.js",
-		"start:prod": "MODE=prod node src/index.js",
+		"start": "env-cmd -f .env.local node src/index.js",
+		"start:dev": "env-cmd -f .env.dev node src/index.js",
+		"start:prod": "env-cmd -f .env.prod node src/index.js",
 		"start:plgr": "yarn prisma playground",
 		"prisma": "prisma",
 		"schema:generate:local": "prisma generate --env-file .env.local",
@@ -18,7 +18,6 @@
 	"dependencies": {
 		"apollo-server": "^2.16.1",
 		"bcryptjs": "^2.4.3",
-		"dotenv": "^8.2.0",
 		"google-auth-library": "^6.0.0",
 		"graphql-tools": "^6.0.15",
 		"graphql-yoga": "^1.7.0",
@@ -27,6 +26,7 @@
 		"prisma-client-lib": "^1.22.2"
 	},
 	"devDependencies": {
+		"env-cmd": "^10.1.0",
 		"prisma": "^1.34.0"
 	}
 }
