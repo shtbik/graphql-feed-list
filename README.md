@@ -14,12 +14,13 @@ test@test.ru | 123456
 ## Start Project
 
 1. yarn install
-2. cd ./server && yarn install
-3. create .env.local
-4. yarn start
-5. yarn start:server
-6. localhost:3000 - client
-7. localhost:4000 - server
+2. create .env.local for client
+3. cd ./server && yarn install
+4. create .env.local for server
+5. yarn start
+6. yarn start:server
+7. localhost:3000 - client
+8. localhost:4000 - server
 
 ## Deploy Client to Heroku
 
