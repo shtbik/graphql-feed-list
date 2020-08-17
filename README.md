@@ -1,7 +1,7 @@
 ## Demo
 
-PROD - https://client-feed-list-prod.herokuapp.com/ (EU)
 DEV - https://client-feed-list-dev.herokuapp.com/ (US)
+PROD - https://client-feed-list-prod.herokuapp.com/ (EU)
 
 test@test.ru | 123456
 
@@ -15,28 +15,33 @@ test@test.ru | 123456
 
 1. yarn install
 2. cd ./server && yarn install
-3. yarn start
-4. yarn start:server
-5. localhost:3000 - client
-6. localhost:4000 - server
+3. create .env.local
+4. yarn start
+5. yarn start:server
+6. localhost:3000 - client
+7. localhost:4000 - server
 
 ## Deploy Client to Heroku
 
-1. yarn deploy:{env}
+1. yarn client:deploy:\${env}
 
 https://medium.com/@agavitalis/how-to-deploy-a-simple-static-html-website-on-heroku-492697238e48
 
 ## Deploy Schema to Prisma
 
 1. cd ./server
-2. prisma:deploy:{env}
+2. schema:generate:\${env}
+3. prisma:deploy:\${env}
+
+https://us1.prisma.sh/alexander-shtykov-ca308e/prisma/dev
+https://eu1.prisma.sh/alexander-shtykov-ca308e/prisma/prod
 
 ## Deploy Server to Heroku
 
-1. cd ./server
-2. yarn prisma generate (isn't require)
-3. git subtree push --prefix server heroku master
-4. https://graphql-feed-list.herokuapp.com/
+1. server:deploy:{env}
+
+https://graphql-feed-list-dev.herokuapp.com/
+https://graphql-feed-list-prod.herokuapp.com/
 
 https://medium.com/@shalandy/deploy-git-subdirectory-to-heroku-ea05e95fce1f
 
@@ -55,8 +60,9 @@ https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/buil
 - swap prisma's servers region
 - move to monorepo for client and server sides
 - refactoring build commands
-- fix bugs with search after implementation of infinity loader
-- change schemes format
+- fix few loaders after searching and scrolling
+- change client's schemes format
+- move to prisma v2
 - add upvoting feature
 - add personal page with list of contents
 - add new fields (title, source, author, etc.) to feed model

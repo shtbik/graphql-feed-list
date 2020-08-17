@@ -2,6 +2,31 @@
 	"name": "feed-list-app",
 	"version": "0.1.1",
 	"private": true,
+	"scripts": {
+		"start": "env-cmd -f .env.local react-scripts start",
+		"start:dev": "env-cmd -f .env.dev react-scripts start",
+		"start:prod": "env-cmd -f .env.prod react-scripts start",
+		"start:server": "cd server && yarn start",
+		"build:dev": "env-cmd -f .env.dev react-scripts build",
+		"build:prod": "env-cmd -f .env.prod react-scripts build",
+		"client:deploy:dev": "rm -rf build && yarn build:dev && cd build && echo '{}' > composer.json && echo '<?php include_once(\"home.html\"); ?>' > index.php && mv index.html home.html && git init && git add . && git commit -m 'Initial commit' && git remote add client-feed-list-dev https://git.heroku.com/client-feed-list-dev.git && git push --force client-feed-list-dev master",
+		"client:deploy:prod": "rm -rf build && yarn build:prod && cd build && echo '{}' > composer.json && echo '<?php include_once(\"home.html\"); ?>' > index.php && mv index.html home.html && git init && git add . && git commit -m 'Initial commit' && git remote add client-feed-list-prod https://git.heroku.com/client-feed-list-prod.git && git push --force client-feed-list-prod master",
+		"server:predeploy:dev": "cd server && yarn schema:generate:dev",
+		"server:predeploy:prod": "cd server && yarn schema:generate:prod",
+		"server:deploy:dev": "yarn server:predeploy:dev && git subtree push --prefix server heroku-dev master",
+		"server:deploy:prod": "yarn server:predeploy:prod && git subtree push --prefix server heroku-prod master",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	],
+	"eslintConfig": {
+		"extends": "react-app"
+	},
 	"dependencies": {
 		"@apollo/react-hooks": "^3.1.3",
 		"@material-ui/core": "^4.9.5",
@@ -25,31 +50,6 @@
 		"react-scripts": "^3.4.0",
 		"subscriptions-transport-ws": "^0.9.15"
 	},
-	"scripts": {
-		"start": "env-cmd -f .env.local react-scripts start",
-		"start:dev": "env-cmd -f .env.dev react-scripts start",
-		"start:prod": "env-cmd -f .env.prod react-scripts start",
-		"start:server": "cd server && yarn start",
-		"build:dev": "env-cmd -f .env.dev react-scripts build",
-		"build:prod": "env-cmd -f .env.prod react-scripts build",
-		"deploy:dev": "rm -rf build && yarn build:dev && cd build && echo '{}' > composer.json && echo '<?php include_once(\"home.html\"); ?>' > index.php && mv index.html home.html && git init && git add . && git commit -m 'Initial commit' && git remote add client-feed-list-dev https://git.heroku.com/client-feed-list-dev.git && git push --force client-feed-list-dev master",
-		"deploy:prod": "rm -rf build && yarn build:prod && cd build && echo '{}' > composer.json && echo '<?php include_once(\"home.html\"); ?>' > index.php && mv index.html home.html && git init && git add . && git commit -m 'Initial commit' && git remote add client-feed-list-prod https://git.heroku.com/client-feed-list-prod.git && git push --force client-feed-list-prod master",
-		"heroku:predeploy:dev": "cd server && yarn prisma:generate:dev",
-		"heroku:predeploy:prod": "cd server && yarn prisma:generate:prod",
-		"heroku:deploy:dev": "yarn heroku:predeploy:dev && git subtree push --prefix server heroku-dev master",
-		"heroku:deploy:prod": "yarn heroku:predeploy:prod && git subtree push --prefix server heroku-prod master",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
-	"browserslist": [
-		">0.2%",
-		"not dead",
-		"not ie <= 11",
-		"not op_mini all"
-	],
 	"devDependencies": {
 		"env-cmd": "^10.1.0",
 		"eslint-config-airbnb": "^18.0.1",

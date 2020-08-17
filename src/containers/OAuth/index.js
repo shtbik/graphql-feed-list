@@ -26,7 +26,7 @@ const OAuth = ({ providers, className, history: { push }, enqueueSnackbar }) => 
 		oAuth({ variables: { provider: 'google', token: tokenId } })
 			.then(({ data: { oAuth: user } }) => {
 				saveUserData(user)
-				push(`/`)
+				return push(`/`)
 			})
 			.catch(errors => {
 				console.error('catch', errors)

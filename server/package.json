@@ -1,7 +1,7 @@
 {
 	"name": "feed-list-server",
-	"private": true,
 	"version": "1.0.0",
+	"private": true,
 	"license": "MIT",
 	"scripts": {
 		"start": "node src/index.js",
@@ -9,11 +9,11 @@
 		"start:prod": "MODE=prod node src/index.js",
 		"start:plgr": "yarn prisma playground",
 		"prisma": "prisma",
-		"prisma:deploy:dev": "prisma deploy --env-file .env.dev",
-		"prisma:deploy:prod": "prisma deploy --env-file .env.prod",
-		"prisma:generate:local": "prisma generate --env-file .env.local",
-		"prisma:generate:dev": "prisma generate --env-file .env.dev",
-		"prisma:generate:prod": "prisma generate --env-file .env.prod"
+		"schema:generate:local": "prisma generate --env-file .env.local",
+		"schema:generate:dev": "prisma generate --env-file .env.dev",
+		"schema:generate:prod": "prisma generate --env-file .env.prod",
+		"schema:deploy:dev": "prisma deploy --env-file .env.dev",
+		"schema:deploy:prod": "prisma deploy --env-file .env.prod"
 	},
 	"dependencies": {
 		"apollo-server": "^2.16.1",
