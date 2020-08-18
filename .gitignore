@@ -10,6 +10,7 @@
 
 # production
 /build
+/server/src/generated
 
 # misc
 .DS_Store

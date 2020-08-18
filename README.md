@@ -59,7 +59,6 @@ https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/buil
 ## TODO
 
 - move to monorepo for client and server sides
-- refactoring build commands
 - fix few loaders after searching and scrolling
 - change client's schemes format
 - move to prisma v2

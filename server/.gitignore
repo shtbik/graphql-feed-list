@@ -6,5 +6,4 @@ package-lock.json
 node_modules
 .idea
 .vscode
-src/configs/google-oath-credentials.json
 *.log
