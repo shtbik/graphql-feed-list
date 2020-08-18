@@ -61,7 +61,8 @@ https://www.prisma.io/docs/1.13/tutorials/build-graphql-servers/development/buil
 - move to monorepo for client and server sides
 - fix few loaders after searching and scrolling
 - change client's schemes format
-- move to prisma v2
+- move to prisma v2, TypeScript
+- test coverage (unit)
 - add upvoting feature
 - add personal page with list of contents
 - add new fields (title, source, author, etc.) to feed model

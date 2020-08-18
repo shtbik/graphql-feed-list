@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 import { useLocalStorage } from '@rehooks/local-storage'
+import { flowRight as compose } from 'lodash'
 
 import { AUTH_TOKEN, AUTH_USER } from 'configs/consts'
 import { withSnackbar } from 'notistack'
@@ -16,7 +17,7 @@ const OAuth = ({ providers, className, history: { push }, enqueueSnackbar }) => 
 
 	const saveUserData = ({ token, user }) => {
 		setToken(token)
-		// TODO: remove data after logout
+		// TODO: remove user data after logout
 		setUser(user)
 	}
 
@@ -42,7 +43,6 @@ const OAuth = ({ providers, className, history: { push }, enqueueSnackbar }) => 
 				onSuccess={googleRes}
 				onFailure={googleRes}
 				cookiePolicy="single_host_origin"
-				// isSignedIn
 			/>
 		),
 	}
@@ -68,4 +68,4 @@ OAuth.defaultProps = {
 	className: '',
 }
 
-export default withSnackbar(withRouter(OAuth))
+export default compose(withSnackbar, withRouter)(OAuth)
