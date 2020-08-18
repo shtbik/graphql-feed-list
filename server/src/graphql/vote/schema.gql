@@ -1,0 +1,13 @@
+extend type Mutation {
+	vote(linkId: ID!): Vote!
+}
+
+extend type Subscription {
+	newVote: Vote
+}
+
+type Vote {
+	id: ID!
+	link: Link!
+	user: User!
+}

@@ -1,5 +1,5 @@
 function getApolloURI() {
-	switch (process.env.REACT_APP_GQL_MODE) {
+	switch (process.env.REACT_APP_MODE) {
 		case 'local':
 			return {
 				host: 'localhost:4000',
@@ -7,10 +7,17 @@ function getApolloURI() {
 				wss: false,
 			}
 
-		case 'development':
+		case 'prod':
+			return {
+				host: 'graphql-feed-list-prod.herokuapp.com',
+				ssl: true,
+				wss: true,
+			}
+
+		case 'dev':
 		default:
 			return {
-				host: 'graphql-feed-list.herokuapp.com',
+				host: 'graphql-feed-list-dev.herokuapp.com',
 				ssl: true,
 				wss: true,
 			}

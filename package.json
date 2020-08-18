@@ -2,39 +2,19 @@
 	"name": "feed-list-app",
 	"version": "0.1.1",
 	"private": true,
-	"homepage": "https://shtbik.github.io/graphql-feed-list",
-	"dependencies": {
-		"@apollo/react-hooks": "^3.1.3",
-		"@material-ui/core": "^4.9.5",
-		"@material-ui/icons": "^4.9.1",
-		"apollo-boost": "^0.4.7",
-		"apollo-link-context": "^1.0.12",
-		"apollo-link-ws": "^1.0.14",
-		"classnames": "^2.2.6",
-		"graphql": "^14.0.2",
-		"history": "^4.7.2",
-		"lodash": "^4.17.19",
-		"notistack": "^0.9.9",
-		"prop-types": "^15.6.2",
-		"react": "^16.13.0",
-		"react-apollo": "^3.1.3",
-		"react-dom": "^16.13.0",
-		"react-router-dom": "^5.1.2",
-		"react-scripts": "^3.4.0",
-		"subscriptions-transport-ws": "^0.9.15"
-	},
 	"scripts": {
-		"start": "react-scripts start",
-		"start:localgql": "REACT_APP_GQL_MODE=local react-scripts start",
+		"start": "env-cmd -f .env.local react-scripts start",
+		"start:dev": "env-cmd -f .env.dev react-scripts start",
+		"start:prod": "env-cmd -f .env.prod react-scripts start",
 		"start:server": "cd server && yarn start",
-		"build": "REACT_APP_GQL_MODE=development react-scripts build",
-		"predeploy": "yarn build",
-		"deploy": "gh-pages -d build",
+		"build:dev": "env-cmd -f .env.dev react-scripts build",
+		"build:prod": "env-cmd -f .env.prod react-scripts build",
+		"client:deploy:dev": "sh deploy-client.sh dev",
+		"client:deploy:prod": "sh deploy-client.sh prod",
+		"server:deploy:dev": "sh deploy-server.sh dev",
+		"server:deploy:prod": "sh deploy-server.sh prod",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
 	},
 	"browserslist": [
 		">0.2%",
@@ -42,7 +22,34 @@
 		"not ie <= 11",
 		"not op_mini all"
 	],
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"dependencies": {
+		"@apollo/react-hooks": "^3.1.3",
+		"@material-ui/core": "^4.9.5",
+		"@material-ui/icons": "^4.9.1",
+		"@rehooks/local-storage": "^2.4.0",
+		"apollo-boost": "^0.4.7",
+		"apollo-link-context": "^1.0.12",
+		"apollo-link-ws": "^1.0.14",
+		"classnames": "^2.2.6",
+		"graphql": "^14.0.2",
+		"graphql-tag": "^2.10.3",
+		"history": "^4.7.2",
+		"lodash": "^4.17.19",
+		"notistack": "^0.9.9",
+		"prop-types": "^15.6.2",
+		"react": "^16.13.0",
+		"react-apollo": "^3.1.3",
+		"react-dom": "^16.13.0",
+		"react-google-login": "^5.1.3",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "^3.4.0",
+		"subscriptions-transport-ws": "^0.9.15"
+	},
 	"devDependencies": {
+		"env-cmd": "^10.1.0",
 		"eslint-config-airbnb": "^18.0.1",
 		"eslint-config-prettier": "^6.10.0",
 		"eslint-config-react-app": "^5.2.0",
@@ -50,7 +57,6 @@
 		"eslint-plugin-import": "^2.14.0",
 		"eslint-plugin-jsx-a11y": "^6.1.2",
 		"eslint-plugin-prettier": "^3.0.0",
-		"eslint-plugin-react": "^7.11.1",
-		"gh-pages": "^2.2.0"
+		"eslint-plugin-react": "^7.11.1"
 	}
 }

@@ -1,20 +1,32 @@
 {
 	"name": "feed-list-server",
+	"version": "1.0.1",
 	"private": true,
-	"version": "1.0.0",
 	"license": "MIT",
 	"scripts": {
 		"start": "node src/index.js",
+		"start:dev": "MODE=dev node src/index.js",
+		"start:prod": "MODE=prod node src/index.js",
 		"start:plgr": "yarn prisma playground",
-		"prisma": "prisma"
+		"prisma": "prisma",
+		"schema:generate:local": "prisma generate --env-file .env.local",
+		"schema:generate:dev": "prisma generate --env-file .env.dev",
+		"schema:generate:prod": "prisma generate --env-file .env.prod",
+		"schema:deploy:dev": "prisma deploy --env-file .env.dev",
+		"schema:deploy:prod": "prisma deploy --env-file .env.prod"
 	},
 	"dependencies": {
+		"apollo-server": "^2.16.1",
 		"bcryptjs": "^2.4.3",
+		"dotenv": "^8.2.0",
+		"google-auth-library": "^6.0.0",
+		"graphql-tools": "^6.0.15",
 		"graphql-yoga": "^1.7.0",
 		"jsonwebtoken": "^8.2.0",
+		"lodash": "^4.17.15",
 		"prisma-client-lib": "^1.22.2"
 	},
 	"devDependencies": {
-		"prisma": "^1.23.0"
+		"prisma": "^1.34.0"
 	}
 }
