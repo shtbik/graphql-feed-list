@@ -37,7 +37,7 @@
 		"graphql": "^14.0.2",
 		"graphql-tag": "^2.10.3",
 		"history": "^4.7.2",
-		"lodash": "^4.17.19",
+		"lodash": "^4.17.21",
 		"notistack": "^0.9.9",
 		"prop-types": "^15.6.2",
 		"react": "^16.13.0",
