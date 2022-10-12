@@ -16,7 +16,7 @@
 		"schema:deploy:prod": "prisma deploy --env-file .env.prod"
 	},
 	"dependencies": {
-		"apollo-server": "^2.16.1",
+		"apollo-server": "^2.25.4",
 		"bcryptjs": "^2.4.3",
 		"dotenv": "^8.2.0",
 		"google-auth-library": "^6.0.0",
